@@ -55,29 +55,8 @@ export default function Home() {
         delay: 0.55,
       });
 
-      // --- Floating chips drift in ---
-      gsap.to(".float-chip", {
-        opacity: 1,
-        y: 0,
-        duration: 1.1,
-        ease: "power2.out",
-        stagger: 0.15,
-        delay: 0.9,
-      });
-      // Continuous gentle bob
-      gsap.utils.toArray<HTMLElement>(".float-chip").forEach((el, i) => {
-        gsap.to(el, {
-          y: "+=12",
-          duration: 3 + i * 0.4,
-          ease: "sine.inOut",
-          repeat: -1,
-          yoyo: true,
-          delay: 1.2 + i * 0.2,
-        });
-      });
-
       // --- Generic fade+slide on scroll ---
-      gsap.utils.toArray<HTMLElement>(".anim-fade").forEach((el) => {
+      (gsap.utils.toArray(".anim-fade") as HTMLElement[]).forEach((el: HTMLElement) => {
         gsap.to(el, {
           opacity: 1,
           y: 0,
@@ -92,7 +71,7 @@ export default function Home() {
       });
 
       // --- Dark "card" sections scale-up ---
-      gsap.utils.toArray<HTMLElement>(".section-dark").forEach((el) => {
+      (gsap.utils.toArray(".section-dark") as HTMLElement[]).forEach((el: HTMLElement) => {
         gsap.fromTo(
           el,
           { scale: 0.97, opacity: 0.8 },
@@ -141,7 +120,6 @@ export default function Home() {
 
       {/* Announcement bar */}
       <div className="announce">
-        <span>✦</span>
         Conçu avec et pour des cabinets en droit de l&apos;immigration au Québec.
         <Link href="/demo">Commencer mon essai →</Link>
       </div>
@@ -207,35 +185,91 @@ export default function Home() {
         </div>
       </header>
 
-      {/* PAIN — dark */}
-      <section className="section-dark">
-        <div className="container">
-          <div className="section-head">
-            <h2 className="anim-fade">
-              Vous perdez encore des heures à recopier les mêmes informations
-            </h2>
+      {/* PLATFORM/INTEGRATIONS — dark, wisprflow-style layout */}
+      <section className="section-dark platform-section">
+        <div className="platform-container">
+          <div className="platform-left">
+            <div className="device-chips">
+              <span className="device-chip"><GlobeIcon /> Web</span>
+              <span className="device-chip"><PhoneIcon /> Mobile</span>
+              <span className="device-chip"><TabletIcon /> Tablette</span>
+            </div>
+
+            <div className="platform-text">
+              <h2 className="anim-fade">
+                Vos clients remplissent leur dossier{" "}
+                <span className="platform-em">où qu&apos;ils soient.</span>
+              </h2>
+              <p className="anim-fade">
+                Web, mobile ou tablette — Formio s&apos;adapte à n&apos;importe
+                quel appareil pour offrir à vos clients une expérience fluide et
+                accessible.
+              </p>
+              <Link href="/demo" className="btn-ghost-dark anim-fade">
+                <SparkleIcon /> Voir Formio en action →
+              </Link>
+            </div>
           </div>
 
-          <div className="pain-grid">
-            <div className="pain-card anim-fade">
-              <div className="pain-icon"><MailIcon /></div>
-              <h3>Questionnaires Word envoyés par email</h3>
-              <p>Des fichiers incomplets, mal formatés, perdus dans les courriels.</p>
-            </div>
-            <div className="pain-card anim-fade">
-              <div className="pain-icon"><CopyIcon /></div>
-              <h3>Copier-coller dans chaque formulaire</h3>
-              <p>Les mêmes données retapées dans IMM, Arrima, IRCC… à chaque dossier.</p>
-            </div>
-            <div className="pain-card anim-fade">
-              <div className="pain-icon"><AlertIcon /></div>
-              <h3>Erreurs qui coûtent cher</h3>
-              <p>Une faute de frappe peut retarder un dossier de plusieurs semaines.</p>
-            </div>
-            <div className="pain-card anim-fade">
-              <div className="pain-icon"><UsersIcon /></div>
-              <h3>Impossible de prendre plus de clients</h3>
-              <p>Le remplissage manuel est votre goulot d&apos;étranglement.</p>
+          <div className="platform-right">
+            {/* Decorative organic blob shapes behind the phone */}
+            <svg
+              className="blob blob-main"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 600 500"
+              aria-hidden
+            >
+              <path
+                fill="#0e7490"
+                fillOpacity="1"
+                d="M280,40 C340,10 420,30 460,80 C500,130 480,200 510,260 C545,325 600,340 590,410 C578,478 510,500 445,495 C385,490 355,530 290,518 C225,506 175,460 148,400 C120,338 145,275 118,215 C90,152 40,130 42,68 C44,8 110,-10 165,18 C210,42 220,70 280,40 Z"
+              />
+            </svg>
+            <svg
+              className="blob blob-echo"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 600 500"
+              aria-hidden
+            >
+              <path
+                fill="#0e7490"
+                fillOpacity="0.35"
+                d="M280,40 C340,10 420,30 460,80 C500,130 480,200 510,260 C545,325 600,340 590,410 C578,478 510,500 445,495 C385,490 355,530 290,518 C225,506 175,460 148,400 C120,338 145,275 118,215 C90,152 40,130 42,68 C44,8 110,-10 165,18 C210,42 220,70 280,40 Z"
+              />
+            </svg>
+
+            <div className="device-stack anim-fade">
+              <div className="phone-frame">
+                <div className="phone-notch" />
+                <div className="phone-screen">
+                  <div className="phone-status">
+                    <span>9:41</span>
+                    <span className="phone-status-icons">●●● ◐</span>
+                  </div>
+                  <div className="phone-app-header">
+                    <div className="phone-logo-mark">F</div>
+                    <div className="phone-app-title">
+                      <strong>Formio</strong>
+                      <span>Question 12 / 24</span>
+                    </div>
+                  </div>
+                  <div className="phone-progress">
+                    <div className="phone-progress-fill" />
+                  </div>
+                  <div className="phone-question">
+                    <span className="phone-eyebrow">INFORMATIONS PERSONNELLES</span>
+                    <h4>Quel est votre lieu de naissance&nbsp;?</h4>
+                    <div className="phone-input">
+                      <span>Montréal, Québec, Canada</span>
+                      <span className="phone-check"><CheckIcon /></span>
+                    </div>
+                    <div className="phone-hint">Auto-rempli depuis votre passeport</div>
+                  </div>
+                  <div className="phone-cta">
+                    Suivant <span>→</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -486,7 +520,7 @@ export default function Home() {
         </div>
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} Formio. Tous droits réservés.</span>
-          <span>Fait au Québec ✦</span>
+          <span>Fait au Québec</span>
         </div>
       </footer>
     </>
@@ -592,6 +626,97 @@ function WandIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M15 4V2M15 16v-2M8 9h2M20 9h2M17.8 11.8 19 13M15 9h0M17.8 6.2 19 5M3 21l9-9M12.2 6.2 11 5" />
+    </svg>
+  );
+}
+function FileIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+    </svg>
+  );
+}
+function DocIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+      <line x1="9" y1="13" x2="15" y2="13" />
+      <line x1="9" y1="17" x2="15" y2="17" />
+    </svg>
+  );
+}
+function GlobeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M2 12h20" />
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+    </svg>
+  );
+}
+function PhoneIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="5" y="2" width="14" height="20" rx="2.5" />
+      <line x1="12" y1="18" x2="12" y2="18" />
+    </svg>
+  );
+}
+function TabletIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2.5" />
+      <line x1="12" y1="18" x2="12" y2="18" />
+    </svg>
+  );
+}
+function BuildingIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="4" y="2" width="16" height="20" rx="1" />
+      <line x1="9" y1="6" x2="9" y2="6" />
+      <line x1="15" y1="6" x2="15" y2="6" />
+      <line x1="9" y1="10" x2="9" y2="10" />
+      <line x1="15" y1="10" x2="15" y2="10" />
+      <line x1="9" y1="14" x2="9" y2="14" />
+      <line x1="15" y1="14" x2="15" y2="14" />
+      <path d="M10 22v-4h4v4" />
+    </svg>
+  );
+}
+function PassportIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="4" y="2" width="16" height="20" rx="2" />
+      <circle cx="12" cy="10" r="3" />
+      <path d="M8 18h8" />
+    </svg>
+  );
+}
+function UploadIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <polyline points="17 8 12 3 7 8" />
+      <line x1="12" y1="3" x2="12" y2="15" />
+    </svg>
+  );
+}
+function BellIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+    </svg>
+  );
+}
+function LockIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="11" width="18" height="11" rx="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
     </svg>
   );
 }
