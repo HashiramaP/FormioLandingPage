@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Script from "next/script";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 declare global {
   interface Window {
@@ -54,6 +54,146 @@ export default function Home() {
         stagger: 0.12,
         delay: 0.55,
       });
+
+      // --- Stats breakdown: headline stagger + sequential bar fill + phone fade ---
+      const statsWords = document.querySelectorAll<HTMLElement>(".stats-head .anim-word");
+      if (statsWords.length) {
+        gsap.to(statsWords, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.1,
+          scrollTrigger: {
+            trigger: ".stats-head",
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        });
+      }
+
+      const barTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".breakdown",
+          start: "top 70%",
+          toggleActions: "play none none none",
+        },
+      });
+      barTl
+        // bar segments fill top-to-bottom
+        .to(".bar-seg-1", { scaleY: 1, duration: 0.6, ease: "power2.out" }, 0)
+        .to(".bar-seg-2", { scaleY: 1, duration: 0.6, ease: "power2.out" }, 0.6)
+        .to(".bar-seg-3", { scaleY: 1, duration: 0.4, ease: "power2.out" }, 1.2)
+        // breakdown labels slide in alongside the bar
+        .to(
+          ".breakdown-label",
+          { opacity: 1, x: 0, duration: 0.6, ease: "power2.out", stagger: 0.12 },
+          0
+        )
+        // Blue checklist rows — start when seg 1 begins, with checkmark flash
+        .to(
+          ".checklist-row.blue",
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.45,
+            ease: "power2.out",
+            stagger: 0.15,
+          },
+          0
+        )
+        .fromTo(
+          ".checklist-row.blue .check-icon",
+          { scale: 1.3 },
+          { scale: 1, duration: 0.25, ease: "power2.out", stagger: 0.15 },
+          0
+        )
+        // Purple checklist rows — start when seg 2 begins, with checkmark flash
+        .to(
+          ".checklist-row.teal",
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.45,
+            ease: "power2.out",
+            stagger: 0.2,
+          },
+          0.6
+        )
+        .fromTo(
+          ".checklist-row.teal .check-icon",
+          { scale: 1.3 },
+          { scale: 1, duration: 0.25, ease: "power2.out", stagger: 0.2 },
+          0.6
+        )
+        // Gray checklist rows — fade to 50% together when seg 3 begins
+        .to(
+          ".checklist-row.gray",
+          {
+            opacity: 0.5,
+            x: 0,
+            duration: 0.5,
+            ease: "power2.out",
+            stagger: 0.08,
+          },
+          1.2
+        );
+
+      // --- 2-step "how it works" section timeline ---
+      const howTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".how-section",
+          start: "top 60%",
+          toggleActions: "play none none none",
+        },
+      });
+      howTl
+        .to(".how-eyebrow", {
+          opacity: 1,
+          y: 0,
+          duration: 0.3,
+          ease: "power2.out",
+        })
+        .to(
+          ".how-head .anim-word",
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            ease: "power3.out",
+            stagger: 0.06,
+          },
+          0.1
+        )
+        .to(
+          ".how-step-1",
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+            ease: "power3.out",
+          },
+          0.45
+        )
+        .to(
+          ".how-step-2",
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+            ease: "power3.out",
+          },
+          0.45
+        )
+        .to(
+          ".how-arrow",
+          {
+            clipPath: "inset(0 0% 0 0)",
+            duration: 0.5,
+            ease: "power2.out",
+          },
+          0.85
+        );
 
       // --- Generic fade+slide on scroll ---
       (gsap.utils.toArray(".anim-fade") as HTMLElement[]).forEach((el: HTMLElement) => {
@@ -128,7 +268,7 @@ export default function Home() {
       <div className="nav-wrap">
         <nav className="nav" ref={navRef}>
           <a href="#" className="nav-brand">
-            <img src="/formio-logo.png" alt="Formio logo" width={26} height={26} />
+            <img src="/formio-logo.svg" alt="Formio logo" width={26} height={26} />
             Formio
           </a>
           <div className="nav-center">
@@ -275,255 +415,411 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PLATFORM — cream */}
-      <section id="platform" className="section-cream">
+      {/* STATS / BREAKDOWN — cream */}
+      <section id="stats" className="section-cream stats-section">
         <div className="container">
-          <div className="section-head">
-            <h2 className="anim-fade">
-              <span style={{ color: "var(--gray-muted)" }}>Une seule plateforme. </span>
-              <span>Zéro copier-coller.</span>
-            </h2>
-            <p className="anim-fade">
-              De la collecte d&apos;information client à la génération automatique de
-              formulaires gouvernementaux, Formio gère tout.
-            </p>
-          </div>
-
-          <div className="pillars">
-            <article className="pillar anim-fade">
-              <div className="pillar-icon"><ChatIcon /></div>
-              <h3>Collecte intelligente</h3>
-              <p>
-                Envoyez un questionnaire en ligne à vos clients. Les réponses arrivent
-                structurées, complètes et prêtes à utiliser.
-              </p>
-              <ul>
-                <li>Questionnaires personnalisables</li>
-                <li>Réponses structurées automatiquement</li>
-                <li>Suivi des réponses en temps réel</li>
-              </ul>
-            </article>
-
-            <article className="pillar anim-fade">
-              <div className="pillar-icon amber"><FolderIcon /></div>
-              <h3>Gestion de dossiers</h3>
-              <p>
-                Tous vos clients, leurs documents et l&apos;état de leurs dossiers
-                dans un seul tableau de bord.
-              </p>
-              <ul>
-                <li>Vue complète de chaque client</li>
-                <li>Historique des formulaires générés</li>
-                <li>Statut de chaque dossier</li>
-              </ul>
-            </article>
-
-            <article className="pillar anim-fade">
-              <div className="pillar-icon navy"><WandIcon /></div>
-              <h3>Génération automatique</h3>
-              <p>
-                En un clic, Formio génère vos formulaires IMM, Arrima et IRCC
-                pré-remplis avec les données du client.
-              </p>
-              <ul>
-                <li>IMM, Arrima, IRCC supportés</li>
-                <li>PDF prêt à vérifier et soumettre</li>
-                <li>Précision garantie</li>
-              </ul>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* HOW IT WORKS — dark */}
-      <section id="how" className="section-dark">
-        <div className="container">
-          <div className="section-head">
-            <h2 className="anim-fade">De zéro à formulaire rempli en 3 étapes</h2>
-          </div>
-
-          <div className="steps">
-            <div className="step anim-fade">
-              <div className="step-num">01</div>
-              <h3>Envoyez le questionnaire</h3>
-              <p>
-                Créez un dossier client et envoyez-lui un questionnaire en ligne. Il
-                le remplit depuis son navigateur.
-              </p>
-            </div>
-            <div className="step anim-fade">
-              <div className="step-num">02</div>
-              <h3>Formio structure les données</h3>
-              <p>
-                Les réponses du client sont automatiquement organisées et validées.
-                Plus de Word incomplets.
-              </p>
-            </div>
-            <div className="step anim-fade">
-              <div className="step-num">03</div>
-              <h3>Générez les formulaires</h3>
-              <p>
-                En un clic, obtenez vos IMM, Arrima ou IRCC pré-remplis. Il ne reste
-                qu&apos;à vérifier et soumettre.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* STATS — cream */}
-      <section id="stats" className="section-cream">
-        <div className="container">
-          <div className="section-head">
-            <h2 className="anim-fade">
-              <span style={{ color: "var(--gray-muted)" }}>Des chiffres qui parlent </span>
-              <span>d&apos;eux-mêmes.</span>
+          <div className="stats-head">
+            <h2>
+              <span className="stats-line-1">
+                <span className="stats-line-1-inner">
+                  {splitWords("70% du dossier")}
+                  <svg
+                    className="headline-underline"
+                    viewBox="0 0 400 18"
+                    preserveAspectRatio="none"
+                    aria-hidden
+                  >
+                    <path
+                      d="M 8 10 C 50 2, 95 16, 135 8 C 180 0, 220 15, 268 7 C 310 1, 355 13, 392 6"
+                      stroke="#0e7490"
+                      strokeWidth="5"
+                      strokeLinecap="round"
+                      fill="none"
+                    />
+                  </svg>
+                </span>
+              </span>
+              <span className="stats-line-2">
+                {splitWords("déjà rempli avant que votre client commence.")}
+              </span>
             </h2>
           </div>
 
-          <div className="stats-row">
-            <div className="stat anim-fade">
-              <div className="stat-value">80%</div>
-              <div className="stat-label">de temps gagné</div>
-              <div className="stat-desc">sur le remplissage de formulaires</div>
+          <div className="breakdown">
+            {/* LEFT — segmented bar + labels */}
+            <div className="breakdown-left">
+              <div className="breakdown-bar">
+                <div className="bar-seg bar-seg-1" />
+                <div className="bar-seg bar-seg-2" />
+                <div className="bar-seg bar-seg-3" />
+              </div>
+              <div className="breakdown-labels">
+                <div className="breakdown-label breakdown-label-1">
+                  <div className="bd-icon blue"><PassportIcon /></div>
+                  <div className="bd-text">
+                    <div className="bd-header">
+                      <h3>Extrait automatiquement</h3>
+                      <span className="bd-badge blue">~35%</span>
+                    </div>
+                    <p>
+                      Depuis le passeport, CV, permis de séjour — nom, date de
+                      naissance, adresse, historique…
+                    </p>
+                  </div>
+                </div>
+                <div className="breakdown-label breakdown-label-2">
+                  <div className="bd-icon teal"><CheckIcon /></div>
+                  <div className="bd-text">
+                    <div className="bd-header">
+                      <h3>Questions simples</h3>
+                      <span className="bd-badge teal">~35%</span>
+                    </div>
+                    <p>
+                      Oui / Non. Cases à cocher. Votre client répond en quelques
+                      secondes.
+                    </p>
+                  </div>
+                </div>
+                <div className="breakdown-label breakdown-label-3">
+                  <div className="bd-icon gray"><SparkleIcon /></div>
+                  <div className="bd-text">
+                    <div className="bd-header">
+                      <h3>Ce qui reste</h3>
+                      <span className="bd-badge gray">~30%</span>
+                    </div>
+                    <p>
+                      Seulement les vraies questions complexes. Ce pour quoi vous
+                      êtes payé.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="stat anim-fade">
-              <div className="stat-value">2 min</div>
-              <div className="stat-label">par formulaire</div>
-              <div className="stat-desc">au lieu de 45+ minutes manuellement</div>
-            </div>
-            <div className="stat anim-fade">
-              <div className="stat-value">0</div>
-              <div className="stat-label">erreurs de saisie</div>
-              <div className="stat-desc">les données viennent directement du client</div>
+
+            {/* RIGHT — animated immigration checklist */}
+            <div className="breakdown-right">
+              <div className="checklist">
+                <div className="checklist-header">
+                  DOSSIER TYPE — RÉSIDENCE PERMANENTE
+                </div>
+                <ul>
+                  {/* Blue — auto-extracted from documents */}
+                  <li className="checklist-row blue">
+                    <span className="check-icon blue"><CheckIcon /></span>
+                    <span className="q-text">Nom complet</span>
+                    <span className="q-badge blue">Passeport</span>
+                  </li>
+                  <li className="checklist-row blue">
+                    <span className="check-icon blue"><CheckIcon /></span>
+                    <span className="q-text">Date de naissance</span>
+                    <span className="q-badge blue">Passeport</span>
+                  </li>
+                  <li className="checklist-row blue">
+                    <span className="check-icon blue"><CheckIcon /></span>
+                    <span className="q-text">Lieu de naissance</span>
+                    <span className="q-badge blue">Passeport</span>
+                  </li>
+                  <li className="checklist-row blue">
+                    <span className="check-icon blue"><CheckIcon /></span>
+                    <span className="q-text">Nationalité</span>
+                    <span className="q-badge blue">Passeport</span>
+                  </li>
+                  <li className="checklist-row blue">
+                    <span className="check-icon blue"><CheckIcon /></span>
+                    <span className="q-text">Historique professionnel</span>
+                    <span className="q-badge blue">CV</span>
+                  </li>
+
+                  {/* Teal — simple yes/no */}
+                  <li className="checklist-row teal">
+                    <span className="check-icon teal"><CheckIcon /></span>
+                    <span className="q-text">Avez-vous déjà été refusé&nbsp;?</span>
+                    <span className="q-badge teal">Oui / Non</span>
+                  </li>
+                  <li className="checklist-row teal">
+                    <span className="check-icon teal"><CheckIcon /></span>
+                    <span className="q-text">Êtes-vous marié(e)&nbsp;?</span>
+                    <span className="q-badge teal">Oui / Non</span>
+                  </li>
+                  <li className="checklist-row teal">
+                    <span className="check-icon teal"><CheckIcon /></span>
+                    <span className="q-text">Avez-vous des enfants&nbsp;?</span>
+                    <span className="q-badge teal">Oui / Non</span>
+                  </li>
+                  <li className="checklist-row teal">
+                    <span className="check-icon teal"><CheckIcon /></span>
+                    <span className="q-text">Parlez-vous français ou anglais&nbsp;?</span>
+                    <span className="q-badge teal">Oui / Non</span>
+                  </li>
+
+                  {/* Gray — complex, unchecked */}
+                  <li className="checklist-row gray">
+                    <span className="check-icon empty" />
+                    <span className="q-text">Décrivez votre parcours d&apos;immigration</span>
+                  </li>
+                  <li className="checklist-row gray">
+                    <span className="check-icon empty" />
+                    <span className="q-text">Lettre de motivation</span>
+                  </li>
+                  <li className="checklist-row gray">
+                    <span className="check-icon empty" />
+                    <span className="q-text">Preuve de liens avec le pays d&apos;origine</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-          <p className="stats-microcopy anim-fade">
-            Conçu avec et pour des cabinets en droit de l&apos;immigration au Québec.
+
+          <p className="stats-microcopy">
+            Conçu avec et pour des cabinets en droit de l&apos;immigration au
+            Québec.
           </p>
         </div>
       </section>
 
-      {/* FAQ — dark */}
-      <section id="faq" className="section-dark">
-        <div className="container">
-          <div className="section-head">
-            <h2 className="anim-fade">Tout ce que vous devez savoir sur Formio</h2>
+      {/* HOW IT WORKS — cream, 2-step */}
+      <section id="platform" className="section-cream how-section">
+        <div className="how-head">
+          <span className="how-eyebrow">COMMENT ÇA MARCHE</span>
+          <h2>
+            <span className="how-line-1">{splitWords("Deux étapes,")}</span>
+            {" "}
+            <span className="how-line-2">{splitWords("c'est tout")}</span>
+          </h2>
+        </div>
+
+        <div className="how-grid">
+          {/* Step 1 */}
+          <div className="how-step how-step-1">
+            <div className="how-big-num">01</div>
+            <div className="how-content">
+              <h3>Le formulaire d&apos;accueil</h3>
+              <p>
+                Envoyez un lien à votre client. En quelques minutes, il répond
+                à des questions simples depuis son téléphone — sans jargon
+                juridique, sans PDF à imprimer.
+              </p>
+            </div>
           </div>
 
-          <div className="faq-list">
-            <details className="faq-item anim-fade">
-              <summary>Formio est-il sécurisé pour les données de mes clients ?</summary>
-              <p className="faq-answer">
-                Oui. Formio <strong>ne soumet aucun document</strong> en votre nom et{" "}
-                <strong>ne stocke aucune information client de façon permanente</strong>.
-                Toutes les données sont chiffrées et traitées selon les normes de
-                l&apos;industrie juridique.
-              </p>
-            </details>
-            <details className="faq-item anim-fade">
-              <summary>Quels formulaires sont supportés ?</summary>
-              <p className="faq-answer">
-                Formio supporte les formulaires IMM (immigration fédérale), Arrima
-                (Québec) et IRCC. De nouveaux formulaires sont ajoutés régulièrement.
-              </p>
-            </details>
-            <details className="faq-item anim-fade">
-              <summary>Combien de temps vais-je réellement gagner ?</summary>
-              <p className="faq-answer">
-                Nos utilisateurs constatent jusqu&apos;à 80% de temps gagné par
-                formulaire. Un formulaire qui prenait 45 minutes se complète en 2
-                minutes avec Formio.
-              </p>
-            </details>
-            <details className="faq-item anim-fade">
-              <summary>Est-ce que ça fonctionne avec mon workflow actuel ?</summary>
-              <p className="faq-answer">
-                Oui. Formio remplace vos questionnaires Word et votre copier-coller
-                manuel. Vos clients remplissent un formulaire en ligne, et vous
-                recevez les données structurées directement dans la plateforme.
-              </p>
-            </details>
-            <details className="faq-item anim-fade">
-              <summary>Formio soumet-il les formulaires à ma place ?</summary>
-              <p className="faq-answer">
-                Non. Formio pré-remplit les formulaires et vous laisse le contrôle
-                total pour vérifier et soumettre vous-même. C&apos;est votre
-                expertise qui finalise le travail.
-              </p>
-            </details>
+          {/* Connector — hand-drawn dashed arrow */}
+          <div className="how-connector">
+            <span className="how-connector-label">
+              Formio s&apos;occupe du reste
+            </span>
+            <svg
+              className="how-arrow"
+              viewBox="0 0 300 60"
+              preserveAspectRatio="none"
+              aria-hidden
+            >
+              <path d="M 10 30 C 55 18, 110 44, 150 30 C 195 16, 240 44, 285 30 L 268 18 M 285 30 L 268 42" />
+            </svg>
           </div>
+
+          {/* Step 2 */}
+          <div className="how-step how-step-2">
+            <div className="how-big-num">02</div>
+            <div className="how-content">
+              <h3>Les documents légaux générés</h3>
+              <p>
+                Formio extrait les réponses, les croise avec les données des
+                documents de votre client, et génère automatiquement les
+                formulaires IMM, Arrima ou IRCC — pré-remplis, prêts à
+                vérifier.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <p className="how-microcopy">
+          Conçu avec et pour des cabinets en droit de l&apos;immigration au
+          Québec.
+        </p>
+      </section>
+
+      {/* FAQ — cream, editorial */}
+      <section id="faq" className="section-cream faq-section">
+        <div className="faq-head">
+          <span className="faq-eyebrow">FAQ</span>
+          <h2>
+            <span className="faq-line-1">Tout ce que vous</span>
+            <br />
+            <span className="faq-line-2">voulez savoir.</span>
+          </h2>
+        </div>
+
+        <div className="faq-list">
+          <FaqRow question="Formio est-il sécurisé pour les données de mes clients&nbsp;?">
+            Oui. Formio <strong>ne soumet aucun document</strong> en votre nom
+            et{" "}
+            <strong>
+              ne stocke aucune information client de façon permanente
+            </strong>
+            . Toutes les données sont chiffrées et traitées selon les normes
+            de l&apos;industrie juridique.
+          </FaqRow>
+          <FaqRow question="Quels formulaires sont supportés&nbsp;?">
+            Formio supporte les formulaires IMM (immigration fédérale), Arrima
+            (Québec) et IRCC. De nouveaux formulaires sont ajoutés
+            régulièrement.
+          </FaqRow>
+          <FaqRow question="Combien de temps vais-je réellement gagner&nbsp;?">
+            Nos utilisateurs constatent jusqu&apos;à 80% de temps gagné par
+            formulaire. Un formulaire qui prenait 45 minutes se complète en 2
+            minutes avec Formio.
+          </FaqRow>
+          <FaqRow question="Est-ce que ça fonctionne avec mon workflow actuel&nbsp;?">
+            Oui. Formio remplace vos questionnaires Word et votre copier-coller
+            manuel. Vos clients remplissent un formulaire en ligne, et vous
+            recevez les données structurées directement dans la plateforme.
+          </FaqRow>
+          <FaqRow question="Formio soumet-il les formulaires à ma place&nbsp;?">
+            Non. Formio pré-remplit les formulaires et vous laisse le contrôle
+            total pour vérifier et soumettre vous-même. C&apos;est votre
+            expertise qui finalise le travail.
+          </FaqRow>
         </div>
       </section>
 
-      {/* FINAL CTA */}
+      {/* FINAL CTA — turquoise bordered card with flat results layout */}
       <section id="cta" className="final-cta">
-        <div className="container">
-          <h2 className="anim-fade">Prêt à moderniser votre cabinet ?</h2>
-          <p className="anim-fade">
-            Rejoignez les cabinets d&apos;immigration qui ont déjà éliminé le
-            copier-coller de leur quotidien.
-          </p>
-          <div className="hero-cta-row anim-fade">
-            <Link href="/demo" className="btn-primary">
-              <SparkleIcon /> Voir Formio en action
-            </Link>
+        <div className="final-cta-card anim-fade">
+          <div className="final-cta-inner">
+            <h2 className="anim-fade">
+            Commencer à voir des résultats
+            <br />
+            dès votre premier mois.
+          </h2>
+
+          <div className="final-cta-row anim-fade">
+            <a href="#" className="btn-primary">
+              <SparkleIcon /> Réserver une démo
+            </a>
+            <span className="final-cta-note">
+              Aucun engagement · Aucune carte requise
+            </span>
           </div>
-          <div className="final-features anim-fade">
-            <span><CheckIcon /> Démonstration personnalisée</span>
-            <span><CheckIcon /> Aucun engagement</span>
-            <span><CheckIcon /> Support dédié</span>
+
+          <div className="final-stats anim-fade">
+            <div className="final-stat">
+              <div className="final-stat-value">4h</div>
+              <div className="final-stat-label">Sauvées par demande</div>
+            </div>
+            <div className="final-stat">
+              <div className="final-stat-value">70%+</div>
+              <div className="final-stat-label">Automatisés</div>
+            </div>
+            <div className="final-stat">
+              <div className="final-stat-value">0$</div>
+              <div className="final-stat-label">Jusqu&apos;à la satisfaction</div>
+            </div>
           </div>
-          <div className="final-trust anim-fade">
-            Aucun engagement. Démonstration personnalisée de 15 minutes.
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer>
-        <div className="footer-grid">
-          <div className="footer-brand">
-            <a href="#" className="nav-brand">
-              <img src="/formio-logo.png" alt="Formio logo" width={32} height={32} />
-              Formio
-            </a>
-            <p>La plateforme moderne pour les professionnels de l&apos;immigration.</p>
+      <footer className="footer">
+        <div className="footer-top">
+          <div className="footer-col">
+            <h4>Entreprise</h4>
+            <ul>
+              <li><a href="#">À propos</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="#">Carrières</a></li>
+              <li><a href="#">Partenaires</a></li>
+            </ul>
           </div>
-          <div className="footer-cols">
-            <div className="footer-col">
-              <h4>Produit</h4>
-              <ul>
-                <li><a href="#platform">Plateforme</a></li>
-                <li><a href="#how">Comment ça marche</a></li>
-                <li><a href="#stats">Résultats</a></li>
-                <li><a href="#faq">FAQ</a></li>
-              </ul>
-            </div>
-            <div className="footer-col">
-              <h4>Compte</h4>
-              <ul>
-                <li><Link href="/demo">Voir Formio en action</Link></li>
-                <li><a href="#cta">Essai gratuit</a></li>
-                <li><a href="#">Connexion</a></li>
-                <li><a href="#">Tableau de bord</a></li>
-              </ul>
-            </div>
-            <div className="footer-col">
-              <h4>Légal</h4>
-              <ul>
-                <li><a href="#">Politique de confidentialité</a></li>
-                <li><a href="#">Contact</a></li>
-              </ul>
-            </div>
+          <div className="footer-col">
+            <h4>Produit</h4>
+            <ul>
+              <li><a href="#platform">Plateforme</a></li>
+              <li><a href="#how">Comment ça marche</a></li>
+              <li><a href="#stats">Résultats</a></li>
+              <li><a href="#faq">FAQ</a></li>
+              <li><Link href="/demo">Démo</Link></li>
+            </ul>
+          </div>
+          <div className="footer-col">
+            <h4>Ressources</h4>
+            <ul>
+              <li><a href="#">Guide d&apos;utilisation</a></li>
+              <li><a href="#">Support</a></li>
+              <li><a href="#">Tableau de bord</a></li>
+              <li><a href="#">Connexion</a></li>
+            </ul>
           </div>
         </div>
+
+        <div className="footer-mark">
+          <img
+            src="/formio-logo.svg"
+            alt=""
+            className="footer-mark-icon"
+            aria-hidden
+          />
+          <span className="footer-mark-text">Formio</span>
+        </div>
+
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} Formio. Tous droits réservés.</span>
-          <span>Fait au Québec</span>
+          <div className="footer-legal">
+            <span>© Formio {new Date().getFullYear()}</span>
+            <a href="#">Conditions</a>
+            <a href="#">Confidentialité</a>
+            <a href="#">Contact</a>
+          </div>
+          <div className="footer-social">
+            <a
+              href="https://www.linkedin.com/company/formioca/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <LinkedInIcon />
+            </a>
+          </div>
         </div>
       </footer>
     </>
+  );
+}
+
+/* -------- FAQ row -------- */
+function FaqRow({
+  question,
+  children,
+}: {
+  question: string;
+  children: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+  return (
+    <div className={`faq-row anim-fade ${open ? "is-open" : ""}`}>
+      <button
+        type="button"
+        className="faq-question"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+      >
+        <span dangerouslySetInnerHTML={{ __html: question }} />
+        <span className="faq-plus" aria-hidden>
+          <span />
+          <span />
+        </span>
+      </button>
+      <div
+        className="faq-answer-wrap"
+        style={{
+          height: open ? contentRef.current?.scrollHeight ?? 0 : 0,
+        }}
+      >
+        <div ref={contentRef} className="faq-answer">
+          {children}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -717,6 +1013,29 @@ function LockIcon() {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="11" width="18" height="11" rx="2" />
       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
+}
+function LinkedInIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  );
+}
+function XIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
     </svg>
   );
 }

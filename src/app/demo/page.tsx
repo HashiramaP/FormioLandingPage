@@ -29,7 +29,7 @@ export default function DemoPage() {
             controls
             playsInline
             preload="metadata"
-            poster="/formio-logo.png"
+            poster="/formio-logo.svg"
           >
             <source src="/formio-demo.mp4" type="video/mp4" />
             Votre navigateur ne supporte pas la lecture vidéo.
