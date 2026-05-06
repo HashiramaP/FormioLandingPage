@@ -29,7 +29,7 @@ export default function Navbar() {
           <div className="nav-center">
             <div className="nav-links">
               <a href="/#stats">Résultats</a>
-              <a href="/#how">Comment ça marche</a>
+              <a href="/#how">Features</a>
               <Link href="/programs">Programmes</Link>
               <Link href="/faq">FAQ</Link>
               <Link href="/blog">Ressources</Link>
