@@ -10,23 +10,17 @@ export const metadata: Metadata = {
 export default function DemoPage() {
   return (
     <main className="demo-page">
-      <Link href="/" className="demo-back">
-        ← Retour à l&apos;accueil
-      </Link>
-
       <div className="demo-container">
         <h1 className="demo-title">
           Voir <span className="demo-title-brand">Formio</span> en action
         </h1>
-        <p className="demo-sub">
-          Un formulaire IMM rempli en 2 minutes au lieu de 45. Regardez par
-          vous-même.
-        </p>
 
         <div className="demo-video-frame">
           <video
             className="demo-video"
             controls
+            autoPlay
+            muted
             playsInline
             preload="metadata"
             poster="/formio-logo.svg"
@@ -37,12 +31,9 @@ export default function DemoPage() {
         </div>
 
         <div className="demo-cta-row">
-          <Link href="/" className="btn-secondary">
-            ← Retour
+          <Link href="/book-call" className="btn-primary">
+            Réserver un appel
           </Link>
-          <a href="https://formio.ca" className="btn-primary">
-            Essayer gratuitement 30 jours
-          </a>
         </div>
       </div>
     </main>

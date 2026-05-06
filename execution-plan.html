@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formio — Website Execution Plan · May 2026</title>
+  <style>
+    :root {
+      --bg: #0b0d14;
+      --surface: #13151f;
+      --surface2: #1c1f2e;
+      --surface3: #232738;
+      --border: #2a2e45;
+      --border2: #363c58;
+      --accent: #6366f1;
+      --accent2: #818cf8;
+      --green: #22c55e;
+      --green2: #4ade80;
+      --red: #ef4444;
+      --red2: #f87171;
+      --yellow: #f59e0b;
+      --yellow2: #fbbf24;
+      --blue: #3b82f6;
+      --blue2: #60a5fa;
+      --teal: #14b8a6;
+      --teal2: #2dd4bf;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --faint: #475569;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    a { color: var(--accent2); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(160deg, #12152a 0%, #0b0d14 60%);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% -5%, rgba(99,102,241,.2) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(20,184,166,.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .header-tag {
+      display: inline-block;
+      background: rgba(99,102,241,.12);
+      color: var(--accent2);
+      border: 1px solid rgba(99,102,241,.3);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      margin-bottom: 24px;
+    }
+    .header h1 {
+      font-size: clamp(32px, 5vw, 54px);
+      font-weight: 800;
+      letter-spacing: -.025em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 40%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header-sub {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 580px;
+      margin: 0 auto 32px;
+    }
+    .header-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .header-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .header-chip strong { color: var(--text); }
+
+    /* ── WRAPPER ── */
+    .wrapper { max-width: 1060px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* ── QUICK STATS BAR ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 40px 0;
+    }
+    .stat-cell {
+      background: var(--surface);
+      padding: 20px 24px;
+      text-align: center;
+    }
+    .stat-cell .val {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      margin-bottom: 4px;
+    }
+    .stat-cell .lbl { font-size: 12px; color: var(--muted); }
+    .val-green { color: var(--green2); }
+    .val-blue { color: var(--blue2); }
+    .val-yellow { color: var(--yellow2); }
+    .val-purple { color: var(--accent2); }
+
+    /* ── CURRENT STATE ── */
+    .current-state {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+    }
+    .current-state h2 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--muted);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    .state-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 600px) { .state-grid { grid-template-columns: 1fr; } }
+    .state-col h3 { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+    .state-col.has h3 { color: var(--green2); }
+    .state-col.missing h3 { color: var(--red2); }
+    .state-list { list-style: none; }
+    .state-list li {
+      font-size: 13px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      color: var(--muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .state-list li:last-child { border-bottom: none; }
+    .state-list li::before { flex-shrink: 0; margin-top: 2px; font-size: 12px; }
+    .state-col.has .state-list li::before { content: '✓'; color: var(--green2); }
+    .state-col.missing .state-list li::before { content: '✗'; color: var(--red2); }
+
+    /* ── PHASE HEADER ── */
+    .phase-header {
+      margin: 56px 0 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .phase-label {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+    .phase-1 { background: rgba(239,68,68,.15); color: var(--red2); border: 1px solid rgba(239,68,68,.3); }
+    .phase-2 { background: rgba(245,158,11,.15); color: var(--yellow2); border: 1px solid rgba(245,158,11,.3); }
+    .phase-3 { background: rgba(34,197,94,.15); color: var(--green2); border: 1px solid rgba(34,197,94,.3); }
+    .phase-4 { background: rgba(99,102,241,.15); color: var(--accent2); border: 1px solid rgba(99,102,241,.3); }
+    .phase-header h2 {
+      font-size: clamp(22px, 3.5vw, 30px);
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .phase-header .phase-meta {
+      margin-left: auto;
+      font-size: 13px;
+      color: var(--faint);
+    }
+
+    /* ── STEP CARD ── */
+    .step-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      transition: border-color .2s;
+    }
+    .step-card:hover { border-color: var(--border2); }
+
+    .step-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 22px 24px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .num-red { background: rgba(239,68,68,.15); color: var(--red2); border: 1px solid rgba(239,68,68,.25); }
+    .num-yellow { background: rgba(245,158,11,.15); color: var(--yellow2); border: 1px solid rgba(245,158,11,.25); }
+    .num-green { background: rgba(34,197,94,.15); color: var(--green2); border: 1px solid rgba(34,197,94,.25); }
+    .num-purple { background: rgba(99,102,241,.15); color: var(--accent2); border: 1px solid rgba(99,102,241,.25); }
+
+    .step-title-wrap { flex: 1; }
+    .step-title { font-size: 18px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 4px; }
+    .step-subtitle { font-size: 13px; color: var(--muted); }
+
+    .step-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-start; }
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: .03em;
+      white-space: nowrap;
+    }
+    .badge-impact-high { background: rgba(34,197,94,.12); color: var(--green2); border: 1px solid rgba(34,197,94,.25); }
+    .badge-impact-med { background: rgba(245,158,11,.12); color: var(--yellow2); border: 1px solid rgba(245,158,11,.25); }
+    .badge-effort-low { background: rgba(59,130,246,.12); color: var(--blue2); border: 1px solid rgba(59,130,246,.25); }
+    .badge-effort-med { background: rgba(99,102,241,.12); color: var(--accent2); border: 1px solid rgba(99,102,241,.25); }
+    .badge-effort-high { background: rgba(239,68,68,.12); color: var(--red2); border: 1px solid rgba(239,68,68,.25); }
+    .badge-time { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+
+    /* Step body */
+    .step-body { padding: 0; }
+
+    .step-section {
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(42,46,69,.6);
+    }
+    .step-section:last-child { border-bottom: none; }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 10px;
+    }
+
+    .step-section p { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+    .step-section p:last-child { margin-bottom: 0; }
+    .step-section p strong { color: var(--text); }
+
+    /* Code block */
+    .code-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 12.5px;
+      line-height: 1.8;
+      overflow-x: auto;
+      margin: 10px 0;
+      white-space: pre;
+    }
+    .code-block .c-comment { color: #586e75; }
+    .code-block .c-key { color: var(--accent2); }
+    .code-block .c-val { color: var(--green2); }
+    .code-block .c-str { color: var(--yellow2); }
+    .code-block .c-tag { color: var(--teal2); }
+
+    /* Checklist */
+    .check-list { list-style: none; margin: 8px 0; }
+    .check-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px;
+      color: var(--muted);
+      padding: 5px 0;
+    }
+    .check-list li::before {
+      content: '→';
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 1px;
+      font-size: 12px;
+    }
+    .check-list li strong { color: var(--text); }
+
+    /* Copy block */
+    .copy-block {
+      background: rgba(99,102,241,.07);
+      border: 1px solid rgba(99,102,241,.2);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+      margin: 10px 0;
+      font-size: 14px;
+      color: var(--text);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .copy-block .copy-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-style: normal;
+      margin-bottom: 6px;
+    }
+
+    /* Page structure */
+    .page-structure {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 10px 0;
+    }
+    .page-structure .ps-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      font-size: 13px;
+    }
+    .page-structure .ps-row:last-child { border-bottom: none; }
+    .ps-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+    .ps-h1 { background: rgba(99,102,241,.15); color: var(--accent2); }
+    .ps-h2 { background: rgba(59,130,246,.15); color: var(--blue2); }
+    .ps-faq { background: rgba(245,158,11,.15); color: var(--yellow2); }
+    .ps-cta { background: rgba(34,197,94,.15); color: var(--green2); }
+    .ps-section { background: rgba(148,163,184,.1); color: var(--muted); }
+    .ps-schema { background: rgba(239,68,68,.15); color: var(--red2); }
+    .ps-label { color: var(--text); font-weight: 600; }
+    .ps-desc { color: var(--muted); font-size: 12px; flex: 1; }
+
+    /* Callout */
+    .callout {
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      margin: 10px 0;
+      display: flex;
+      gap: 10px;
+    }
+    .callout-icon { flex-shrink: 0; }
+    .callout-why { background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.2); color: #86efac; }
+    .callout-warn { background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.2); color: #fcd34d; }
+    .callout-crit { background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.2); color: #fca5a5; }
+    .callout-info { background: rgba(99,102,241,.08); border: 1px solid rgba(99,102,241,.2); color: var(--accent2); }
+
+    /* Table */
+    .data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+    .data-table th {
+      text-align: left;
+      padding: 8px 12px;
+      background: var(--surface2);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td { padding: 9px 12px; border-bottom: 1px solid rgba(42,46,69,.5); color: var(--muted); }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table td:first-child { color: var(--text); font-weight: 600; }
+
+    /* Visual step sep */
+    .step-sep {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: -4px 0 16px 36px;
+      font-size: 12px;
+      color: var(--faint);
+    }
+    .step-sep::before { content: '│'; font-size: 20px; color: var(--border2); }
+
+    /* ── PHASE TIMELINE ── */
+    .timeline {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin: 32px 0;
+    }
+    .timeline-header {
+      padding: 16px 24px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .timeline-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 24px;
+      border-bottom: 1px solid rgba(42,46,69,.4);
+    }
+    .timeline-row:last-child { border-bottom: none; }
+    .tl-phase { width: 80px; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .tl-bar-wrap { flex: 1; height: 8px; background: var(--surface2); border-radius: 999px; overflow: hidden; }
+    .tl-bar { height: 100%; border-radius: 999px; }
+    .tl-bar-1 { background: linear-gradient(90deg, #ef4444, #f87171); width: 25%; }
+    .tl-bar-2 { background: linear-gradient(90deg, #f59e0b, #fbbf24); width: 50%; }
+    .tl-bar-3 { background: linear-gradient(90deg, #22c55e, #4ade80); width: 75%; }
+    .tl-bar-4 { background: linear-gradient(90deg, #6366f1, #818cf8); width: 100%; }
+    .tl-meta { width: 160px; text-align: right; font-size: 12px; color: var(--muted); flex-shrink: 0; }
+
+    @media (max-width: 640px) {
+      .step-header { flex-direction: column; gap: 12px; }
+      .step-badges { margin-left: 0; }
+      .tl-meta { display: none; }
+    }
+
+    /* ── PROMPT SECTION ── */
+    .prompt-section { background: rgba(20,184,166,.04); }
+    .prompt-section .section-label { color: var(--teal); }
+    .prompt-wrap { position: relative; }
+    .prompt-text {
+      background: var(--bg);
+      border: 1px solid rgba(20,184,166,.25);
+      border-radius: 10px;
+      padding: 14px 16px;
+      padding-right: 96px;
+      font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.75;
+      color: #94a3b8;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(20,184,166,.15);
+      color: var(--teal2);
+      border: 1px solid rgba(20,184,166,.3);
+      border-radius: 6px;
+      padding: 5px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: .04em;
+      transition: background .15s;
+    }
+    .copy-btn:hover { background: rgba(20,184,166,.3); }
+    .copy-btn.copied { background: rgba(34,197,94,.15); color: var(--green2); border-color: rgba(34,197,94,.3); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-tag">Execution Plan · Shipping-Focused</div>
+  <h1>Build the Best Immigration<br>Software Website in Canada</h1>
+  <p class="header-sub">A step-by-step shipping plan derived from the competitor SEO & GEO audit. Ordered by impact. No fluff.</p>
+  <div class="header-chips">
+    <div class="header-chip"><strong>Project:</strong> Formio Landing Page</div>
+    <div class="header-chip"><strong>Stack:</strong> Next.js 15 · App Router · TypeScript</div>
+    <div class="header-chip"><strong>Date:</strong> May 2026</div>
+    <div class="header-chip"><strong>Steps:</strong> 14 total</div>
+    <div class="header-chip"><strong>Phases:</strong> 4</div>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <!-- QUICK STATS -->
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="val val-red" style="color:#f87171">3.7★</div>
+      <div class="lbl">CaseEasy's Capterra score (3 reviews)</div>
+    </div>
+    <div class="stat-cell">
+      <div class="val val-green">0</div>
+      <div class="lbl">Competitors with FAQPage schema</div>
+    </div>
+    <div class="stat-cell">
+      <div class="val val-yellow">0</div>
+      <div class="lbl">Competitors with comparison pages</div>
+    </div>
+    <div class="stat-cell">
+      <div class="val val-blue">403</div>
+      <div class="lbl">VisaFlo's response to AI crawlers</div>
+    </div>
+    <div class="stat-cell">
+      <div class="val val-purple">10</div>
+      <div class="lbl">CaseEasy's sitemap page count (stale)</div>
+    </div>
+  </div>
+
+  <!-- CURRENT STATE -->
+  <div class="current-state">
+    <h2>Where Formio.ca stands today</h2>
+    <div class="state-grid">
+      <div class="state-col has">
+        <h3>✓ Already built</h3>
+        <ul class="state-list">
+          <li>Hero section (French, animated)</li>
+          <li>Platform/device mockup section</li>
+          <li>Stats breakdown (70% pre-filled)</li>
+          <li>How It Works (2-step)</li>
+          <li>FAQ section (5 questions, accordion)</li>
+          <li>Final CTA with social proof stats</li>
+          <li>Navbar + Footer components</li>
+          <li>/demo route</li>
+          <li>/book-call route</li>
+          <li>GSAP scroll animations</li>
+          <li>EB Garamond + Figtree typography</li>
+          <li>Basic metadata (title + description)</li>
+        </ul>
+      </div>
+      <div class="state-col missing">
+        <h3>✗ Missing (gaps vs. competitors)</h3>
+        <ul class="state-list">
+          <li>Schema markup (FAQPage, SoftwareApplication, Organization)</li>
+          <li>OG tags / Twitter Card tags</li>
+          <li>Canonical URL tag</li>
+          <li>Robots.txt</li>
+          <li>Sitemap.xml</li>
+          <li>Comparison pages (vs CaseEasy, vs Visto, vs VisaFlo)</li>
+          <li>Custom forms landing page</li>
+          <li>Pricing page with comparison table</li>
+          <li>CICC compliance guide / blog</li>
+          <li>Review platform listings (Capterra, G2)</li>
+          <li>Entity signals (Crunchbase, Wikidata)</li>
+          <li>English-language SEO pages</li>
+          <li>Structured "How It Works" with HowTo schema</li>
+          <li>Testimonials with attribution</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE OVERVIEW -->
+  <div class="timeline">
+    <div class="timeline-header">Execution Timeline — 4 Phases</div>
+    <div class="timeline-row">
+      <div class="tl-phase" style="color:#f87171">Phase 1</div>
+      <div class="tl-bar-wrap"><div class="tl-bar tl-bar-1"></div></div>
+      <div class="tl-meta">Week 1 — Technical foundation</div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-phase" style="color:#fbbf24">Phase 2</div>
+      <div class="tl-bar-wrap"><div class="tl-bar tl-bar-2"></div></div>
+      <div class="tl-meta">Weeks 2–3 — Page upgrades</div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-phase" style="color:#4ade80">Phase 3</div>
+      <div class="tl-bar-wrap"><div class="tl-bar tl-bar-3"></div></div>
+      <div class="tl-meta">Weeks 4–6 — New pages</div>
+    </div>
+    <div class="timeline-row">
+      <div class="tl-phase" style="color:#818cf8">Phase 4</div>
+      <div class="tl-bar-wrap"><div class="tl-bar tl-bar-4"></div></div>
+      <div class="tl-meta">Month 2–3 — Authority &amp; GEO</div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  PHASE 1 — TECHNICAL FOUNDATION           -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="phase-header">
+    <span class="phase-label phase-1">Phase 1</span>
+    <h2>Technical Foundation</h2>
+    <span class="phase-meta">Week 1 · All steps &lt;2h each · No competitor has done any of this</span>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-red">1</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Deploy Schema Markup (FAQPage + SoftwareApplication + Organization)</div>
+        <div class="step-subtitle">layout.tsx → &lt;head&gt; — the single highest-leverage SEO/GEO move in the entire plan</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-low">Effort: Low</span>
+        <span class="badge badge-time">~2 hours</span>
+      </div>
+    </div>
+
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-why">
+          <span class="callout-icon">🎯</span>
+          <div>Not one competitor (CaseEasy, Visto, VisaFlo) has deployed structured data. FAQPage schema gives you rich results in Google (accordion in SERP). SoftwareApplication schema tells every LLM — ChatGPT, Perplexity, Gemini — exactly what Formio is and who it's for. This is the #1 factor for GEO citation. Do this first.</div>
+        </div>
+      </div>
+
+      <div class="step-section">
+        <div class="section-label">What to build — File: src/app/layout.tsx</div>
+        <p>Add a <strong>JSON-LD script tag</strong> inside &lt;head&gt; with three schema objects. Replace the existing basic metadata export with full OpenGraph and Twitter tags too.</p>
+
+        <div class="code-block"><span class="c-comment">// src/app/layout.tsx — add to &lt;head&gt;</span>
+
+<span class="c-tag">&lt;script</span>
+  <span class="c-key">type</span>=<span class="c-str">"application/ld+json"</span>
+  <span class="c-key">dangerouslySetInnerHTML</span>={{
+    <span class="c-key">__html</span>: JSON.stringify([
+      <span class="c-comment">// 1. SoftwareApplication — makes Formio citeable by LLMs</span>
+      {
+        <span class="c-str">"@context"</span>: <span class="c-val">"https://schema.org"</span>,
+        <span class="c-str">"@type"</span>: <span class="c-val">"SoftwareApplication"</span>,
+        <span class="c-str">"name"</span>: <span class="c-val">"Formio"</span>,
+        <span class="c-str">"applicationCategory"</span>: <span class="c-val">"BusinessApplication"</span>,
+        <span class="c-str">"operatingSystem"</span>: <span class="c-val">"Web, iOS, Android"</span>,
+        <span class="c-str">"description"</span>: <span class="c-val">"Canadian immigration case management software for RCICs and immigration lawyers. Automates client intake, IRCC form pre-filling, and legal document generation."</span>,
+        <span class="c-str">"url"</span>: <span class="c-val">"https://formio.ca"</span>,
+        <span class="c-str">"offers"</span>: {
+          <span class="c-str">"@type"</span>: <span class="c-val">"Offer"</span>,
+          <span class="c-str">"priceCurrency"</span>: <span class="c-val">"CAD"</span>,
+          <span class="c-str">"price"</span>: <span class="c-val">"0"</span>,
+          <span class="c-str">"description"</span>: <span class="c-val">"Free trial available"</span>
+        },
+        <span class="c-str">"featureList"</span>: [
+          <span class="c-val">"IRCC form autofill"</span>,
+          <span class="c-val">"Custom intake forms"</span>,
+          <span class="c-val">"AI document extraction"</span>,
+          <span class="c-val">"IMM form generation"</span>,
+          <span class="c-val">"Client portal"</span>
+        ]
+      },
+      <span class="c-comment">// 2. Organization — entity clarity for LLMs</span>
+      {
+        <span class="c-str">"@context"</span>: <span class="c-val">"https://schema.org"</span>,
+        <span class="c-str">"@type"</span>: <span class="c-val">"Organization"</span>,
+        <span class="c-str">"name"</span>: <span class="c-val">"Formio"</span>,
+        <span class="c-str">"url"</span>: <span class="c-val">"https://formio.ca"</span>,
+        <span class="c-str">"description"</span>: <span class="c-val">"Canadian immigration software for RCICs, immigration lawyers, and consultants in Quebec and Canada."</span>,
+        <span class="c-str">"addressCountry"</span>: <span class="c-val">"CA"</span>,
+        <span class="c-str">"addressRegion"</span>: <span class="c-val">"QC"</span>
+      },
+      <span class="c-comment">// 3. FAQPage — rich results + LLM citation</span>
+      {
+        <span class="c-str">"@context"</span>: <span class="c-val">"https://schema.org"</span>,
+        <span class="c-str">"@type"</span>: <span class="c-val">"FAQPage"</span>,
+        <span class="c-str">"mainEntity"</span>: [
+          {
+            <span class="c-str">"@type"</span>: <span class="c-val">"Question"</span>,
+            <span class="c-str">"name"</span>: <span class="c-val">"What is Formio?"</span>,
+            <span class="c-str">"acceptedAnswer"</span>: {
+              <span class="c-str">"@type"</span>: <span class="c-val">"Answer"</span>,
+              <span class="c-str">"text"</span>: <span class="c-val">"Formio is Canadian immigration software for RCICs, immigration lawyers, and consultants. It automates client intake, extracts data from passports and documents, pre-fills IRCC and IMM forms, and generates legal documents — saving up to 4 hours per application."</span>
+            }
+          },
+          <span class="c-comment">// ... add remaining FAQ items matching page.tsx FaqRow components</span>
+        ]
+      }
+    ])
+  }}
+<span class="c-tag">/&gt;</span></div>
+      </div>
+
+      <div class="step-section">
+        <div class="section-label">Also update metadata export — layout.tsx</div>
+        <div class="code-block"><span class="c-key">export const metadata</span>: Metadata = {
+  <span class="c-str">title</span>: <span class="c-val">"Formio — Immigration Software for RCICs & Consultants | Canada"</span>,
+  <span class="c-str">description</span>: <span class="c-val">"Automate IRCC form filling, client intake, and legal document generation. Used by Canadian immigration consultants and lawyers. Free trial available."</span>,
+  <span class="c-str">alternates</span>: { canonical: <span class="c-val">"https://formio.ca"</span> },
+  <span class="c-str">openGraph</span>: {
+    title: <span class="c-val">"Formio — Immigration Software for Canadian Consultants"</span>,
+    description: <span class="c-val">"Automate your intake forms, IRCC pre-fill, and legal docs."</span>,
+    url: <span class="c-val">"https://formio.ca"</span>,
+    siteName: <span class="c-val">"Formio"</span>,
+    locale: <span class="c-val">"fr_CA"</span>,
+    type: <span class="c-val">"website"</span>,
+  },
+  <span class="c-str">twitter</span>: { card: <span class="c-val">"summary_large_image"</span>, title: <span class="c-val">"Formio"</span>, description: <span class="c-val">"Immigration software for Canadian consultants"</span> }
+};</div>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">In src/app/layout.tsx, make two changes.
+
+1) Add a <script type="application/ld+json"> tag inside <head> using dangerouslySetInnerHTML with three schema objects in an array: (a) SoftwareApplication — name:"Formio", applicationCategory:"BusinessApplication", operatingSystem:"Web, iOS, Android", description:"Canadian immigration case management software for RCICs and immigration lawyers. Automates client intake, IRCC form pre-filling, and legal document generation.", url:"https://formio.ca", offers:{@type:"Offer", priceCurrency:"CAD", price:"0", description:"Free trial available"}, featureList:["IRCC form autofill","Custom intake forms","AI document extraction","IMM form generation","Client portal"]. (b) Organization — name:"Formio", url:"https://formio.ca", description:"Canadian immigration software for RCICs, immigration lawyers, and consultants in Quebec and Canada.", addressCountry:"CA", addressRegion:"QC". (c) FAQPage — mainEntity array with 5 Q&As mirroring the existing FaqRow components in page.tsx (read page.tsx to get the exact questions and answers).
+
+2) Replace the existing metadata export with: title:"Formio — Immigration Software for Canadian Consultants & RCICs", description:"Automate IRCC form filling, client intake, and document generation. Immigration software built for Canadian RCICs and law firms. Free trial — no credit card required.", alternates:{canonical:"https://formio.ca"}, openGraph:{title:"Formio — Immigration Software for Canadian Consultants", description:"Automate your intake forms, IRCC pre-fill, and legal docs.", url:"https://formio.ca", siteName:"Formio", locale:"fr_CA", type:"website"}, twitter:{card:"summary_large_image", title:"Formio", description:"Immigration software for Canadian consultants"}.
+
+Stack: Next.js 15 App Router, TypeScript.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-red">2</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Add robots.txt + sitemap.xml</div>
+        <div class="step-subtitle">app/robots.ts + app/sitemap.ts — basic crawlability that CaseEasy botched</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-low">Effort: Low</span>
+        <span class="badge badge-time">~30 min</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-crit">
+          <span class="callout-icon">🚨</span>
+          <div>CaseEasy's sitemap has 10 pages last updated January 2024. VisaFlo returns 403 to all crawlers. These are basic infrastructure failures. Next.js App Router generates these from code — it takes 30 minutes and gives you a perfect, always-fresh sitemap with zero maintenance.</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">What to build — two new files</div>
+        <div class="code-block"><span class="c-comment">// src/app/robots.ts</span>
+<span class="c-key">import</span> { MetadataRoute } from <span class="c-str">'next'</span>;
+
+<span class="c-key">export default function</span> <span class="c-val">robots</span>(): MetadataRoute.Robots {
+  return {
+    rules: { userAgent: <span class="c-str">'*'</span>, allow: <span class="c-str">'/'</span> },
+    sitemap: <span class="c-str">'https://formio.ca/sitemap.xml'</span>,
+  };
+}</div>
+        <div class="code-block"><span class="c-comment">// src/app/sitemap.ts</span>
+<span class="c-key">import</span> { MetadataRoute } from <span class="c-str">'next'</span>;
+
+<span class="c-key">export default function</span> <span class="c-val">sitemap</span>(): MetadataRoute.Sitemap {
+  <span class="c-key">const</span> base = <span class="c-str">'https://formio.ca'</span>;
+  <span class="c-key">const</span> now = <span class="c-key">new</span> Date();
+  return [
+    { url: base, lastModified: now, changeFrequency: <span class="c-str">'weekly'</span>, priority: 1 },
+    { url: `${base}/pricing`, lastModified: now, changeFrequency: <span class="c-str">'monthly'</span>, priority: 0.9 },
+    { url: `${base}/demo`, lastModified: now, changeFrequency: <span class="c-str">'monthly'</span>, priority: 0.8 },
+    { url: `${base}/book-call`, lastModified: now, changeFrequency: <span class="c-str">'monthly'</span>, priority: 0.8 },
+    { url: `${base}/vs/caseeasy`, lastModified: now, changeFrequency: <span class="c-str">'monthly'</span>, priority: 0.9 },
+    { url: `${base}/vs/visto`, lastModified: now, changeFrequency: <span class="c-str">'monthly'</span>, priority: 0.9 },
+    { url: `${base}/vs/visaflo`, lastModified: now, changeFrequency: <span class="c-str">'monthly'</span>, priority: 0.9 },
+    { url: `${base}/features/custom-forms`, lastModified: now, changeFrequency: <span class="c-str">'monthly'</span>, priority: 0.9 },
+    { url: `${base}/resources/cicc-compliance`, lastModified: now, changeFrequency: <span class="c-str">'monthly'</span>, priority: 0.8 },
+  ];
+}</div>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">Create two new files in this Next.js 15 App Router project.
+
+1) src/app/robots.ts — export default function robots() returning MetadataRoute.Robots with rules:{userAgent:"*", allow:"/"} and sitemap:"https://formio.ca/sitemap.xml".
+
+2) src/app/sitemap.ts — export default function sitemap() returning MetadataRoute.Sitemap with these 9 entries (all lastModified: new Date()): {url:"https://formio.ca", changeFrequency:"weekly", priority:1}, {url:"https://formio.ca/pricing", changeFrequency:"monthly", priority:0.9}, {url:"https://formio.ca/demo", changeFrequency:"monthly", priority:0.8}, {url:"https://formio.ca/book-call", changeFrequency:"monthly", priority:0.8}, {url:"https://formio.ca/vs/caseeasy", changeFrequency:"monthly", priority:0.9}, {url:"https://formio.ca/vs/visto", changeFrequency:"monthly", priority:0.9}, {url:"https://formio.ca/vs/visaflo", changeFrequency:"monthly", priority:0.9}, {url:"https://formio.ca/features/custom-forms", changeFrequency:"monthly", priority:0.9}, {url:"https://formio.ca/resources/cicc-compliance", changeFrequency:"monthly", priority:0.8}.
+
+Stack: Next.js 15 App Router, TypeScript.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-red">3</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Add Named Testimonials with Attribution to Homepage</div>
+        <div class="step-subtitle">page.tsx → new section before FAQ — the trust gap that sinks CaseEasy on review sites</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-low">Effort: Low</span>
+        <span class="badge badge-time">~3 hours</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-why">
+          <span class="callout-icon">🎯</span>
+          <div>CaseEasy has 6 attributed testimonials — the best social proof in the market. Visto has zero. VisaFlo has 2 case studies. Formio needs to beat CaseEasy here: get 3–5 real testimonials with <strong>full name, title, firm name, and a quantified outcome</strong>. Schema markup makes these citable by AI. Generic "great product" quotes do nothing.</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Exact structure needed per testimonial</div>
+        <div class="copy-block">
+          <div class="copy-label">Template</div>
+          "[Specific time saved or outcome] — since using Formio, [specific workflow change]. What used to take [X hours] now takes [Y minutes]."<br><br>
+          — <strong>[First Last]</strong>, [Title] at [Firm Name] · [City, Province]
+        </div>
+        <ul class="check-list">
+          <li>Minimum 3, ideally 5 testimonials before launch</li>
+          <li>Each must have a quantified outcome (time, applications/week, revenue)</li>
+          <li>Each must have full name + firm — anonymous quotes are zero trust value</li>
+          <li>Add <strong>Review schema</strong> JSON-LD for each testimonial so Google can show star ratings</li>
+          <li>Add firm logos below the testimonials grid (even 3–4 logos signals legitimacy)</li>
+        </ul>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Page location</div>
+        <p>Insert between the <strong>How It Works</strong> section and the <strong>FAQ</strong> section in page.tsx. Use a 3-column grid at desktop, stacked on mobile.</p>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">In src/app/page.tsx, insert a new testimonials section between the how-it-works section and the faq section. Build it using the existing section styling patterns in the file. Use a 3-column CSS grid (1 column on mobile). Create 3 placeholder testimonial cards, each with: a blockquote containing a specific quantified outcome (time saved, applications per week, etc.), the reviewer's full name, title (e.g. RCIC), firm name, and city/province. Add the anim-fade class for GSAP scroll animation consistency with other sections.
+
+Also in src/app/layout.tsx, add Review schema JSON-LD for each of the 3 testimonials inside the existing JSON-LD script tag's array. Each Review should have: @type:"Review", author:{@type:"Person", name:"..."}, reviewBody:"...", reviewRating:{@type:"Rating", ratingValue:5, bestRating:5}, itemReviewed:{@type:"SoftwareApplication", name:"Formio"}.
+
+Stack: Next.js 15 App Router, TypeScript, Tailwind CSS, GSAP.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  PHASE 2 — PAGE UPGRADES                  -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="phase-header">
+    <span class="phase-label phase-2">Phase 2</span>
+    <h2>Homepage Upgrades</h2>
+    <span class="phase-meta">Weeks 2–3 · Strengthen what exists · Close specific competitor gaps</span>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-yellow">4</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Expand FAQ: 5 → 12 Questions + FAQPage Schema</div>
+        <div class="step-subtitle">page.tsx FaqRow section — own the "immigration software questions" SERP and LLM citations</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-low">Effort: Low</span>
+        <span class="badge badge-time">~2 hours</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-why">
+          <span class="callout-icon">🤖</span>
+          <div>FAQ is the single most GEO-effective content format. When Perplexity or ChatGPT answers "what is Formio?" or "best RCIC software Canada," it sources FAQ-structured Q&amp;A directly. The current 5 questions are good but narrow — they only cover security and forms. The new questions need to cover comparison, workflow, pricing, and RCIC compliance.</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Exact 7 new questions to add (English + French versions)</div>
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Question</th><th>GEO Signal Target</th></tr></thead>
+          <tbody>
+            <tr><td>Q6</td><td>"How is Formio different from CaseEasy?"</td><td>Competitor comparison intent</td></tr>
+            <tr><td>Q7</td><td>"Does Formio work for Express Entry and PNP applications?"</td><td>Program-specific intent</td></tr>
+            <tr><td>Q8</td><td>"Is Formio compliant with CICC client file management requirements?"</td><td>Compliance / trust intent</td></tr>
+            <tr><td>Q9</td><td>"Can I create custom intake forms for different visa types?"</td><td>Custom forms feature intent</td></tr>
+            <tr><td>Q10</td><td>"How long does it take to set up Formio?"</td><td>Onboarding / friction intent</td></tr>
+            <tr><td>Q11</td><td>"What happens to client data? Where is it stored?"</td><td>Data sovereignty (Canadian servers)</td></tr>
+            <tr><td>Q12</td><td>"Can Formio replace my existing questionnaire process?"</td><td>Migration / switching intent</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Answer template guidance</div>
+        <ul class="check-list">
+          <li>Each answer: 2–4 sentences max. Dense, specific, no fluff.</li>
+          <li>Include a number or specific claim in every answer (e.g., "under 2 minutes", "works with 400+ IRCC forms")</li>
+          <li>End 3–4 answers with an internal link to the relevant feature or comparison page</li>
+          <li>Mirror every FAQ item in the JSON-LD FAQPage schema in layout.tsx (Step 1)</li>
+        </ul>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">In src/app/page.tsx, add 7 new FaqRow components after the existing 5 in the FAQ section. The 7 new Q&As:
+1) Q: "How is Formio different from CaseEasy?" A: "Formio focuses on custom intake form building with no application caps, while CaseEasy is a comprehensive legacy CRM. Setup takes hours not weeks, and Formio includes a full form builder for creating custom questionnaires per visa type."
+2) Q: "Does Formio work for Express Entry and PNP applications?" A: "Yes — Express Entry, all Provincial Nominee Programs, Arrima (Quebec), study permits, work permits, and visitor visas are all supported."
+3) Q: "Is Formio compliant with CICC client file management requirements?" A: "Yes. Formio uses encrypted storage on Canadian servers, tracks client consent, and maintains complete audit trails that meet CICC requirements."
+4) Q: "Can I create custom intake forms for different visa types?" A: "Yes — build forms from scratch, fork existing templates, or import your existing Word or PDF intake forms via AI extraction."
+5) Q: "How long does it take to set up Formio?" A: "Most firms are up and running in under 2 hours. No lengthy onboarding or training required."
+6) Q: "What happens to client data? Where is it stored?" A: "All client data is encrypted and stored on Canadian servers. You retain full data ownership and can export at any time."
+7) Q: "Can Formio replace my existing Word questionnaire process?" A: "Yes. Clients complete a mobile-friendly intake form, and you receive structured data ready for IRCC pre-filling — no more Word attachments by email."
+
+Also update the FAQPage mainEntity array in the JSON-LD script in src/app/layout.tsx to include all 12 Q&As.
+
+Stack: Next.js 15 App Router, TypeScript.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-yellow">5</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Rewrite Hero Copy for Bilingual SEO (FR + EN meta)</div>
+        <div class="step-subtitle">layout.tsx + page.tsx — current hero is French-only, blocking English-language search traffic</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-low">Effort: Low</span>
+        <span class="badge badge-time">~1 hour</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-warn">
+          <span class="callout-icon">⚠️</span>
+          <div>The site is entirely in French. This is fine for Quebec positioning, but <strong>most Google searches for "immigration software Canada" happen in English</strong>. The metadata title and description should be in English (or bilingual) because that's what Google shows in SERP. The visual page can stay French. The &lt;title&gt; and meta description are invisible to users and critical for ranking.</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Exact copy — metadata (layout.tsx)</div>
+        <div class="copy-block">
+          <div class="copy-label">Title tag (English, keyword-first)</div>
+          Formio — Immigration Software for Canadian Consultants & RCICs
+        </div>
+        <div class="copy-block">
+          <div class="copy-label">Meta description (English, 155 chars)</div>
+          Automate IRCC form filling, client intake, and document generation. Immigration software built for Canadian RCICs and law firms. Free trial — no credit card required.
+        </div>
+        <div class="copy-block">
+          <div class="copy-label">H1 (stays French for on-page experience)</div>
+          Arrêtez d'envoyer des Word à vos clients. [keep as-is — strong hook]
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Also add: hreflang signal</div>
+        <div class="code-block"><span class="c-comment">// layout.tsx &lt;head&gt;</span>
+<span class="c-tag">&lt;link</span> <span class="c-key">rel</span>=<span class="c-str">"alternate"</span> <span class="c-key">hrefLang</span>=<span class="c-str">"fr-CA"</span> <span class="c-key">href</span>=<span class="c-str">"https://formio.ca"</span> <span class="c-tag">/&gt;</span>
+<span class="c-tag">&lt;link</span> <span class="c-key">rel</span>=<span class="c-str">"alternate"</span> <span class="c-key">hrefLang</span>=<span class="c-str">"en-CA"</span> <span class="c-key">href</span>=<span class="c-str">"https://formio.ca/en"</span> <span class="c-tag">/&gt;</span></div>
+        <p style="margin-top:8px"><strong>Decision point:</strong> If English-Canada market matters, create <code>/en</code> route with English page copy. If you're only targeting Quebec consultants, keep FR-only and optimize title/meta in English only.</p>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">In src/app/layout.tsx, make three changes.
+
+1) Update the metadata export: title:"Formio — Immigration Software for Canadian Consultants & RCICs", description:"Automate IRCC form filling, client intake, and document generation. Built for Canadian RCICs and immigration lawyers. Free trial — no credit card required.", alternates:{canonical:"https://formio.ca"}, openGraph:{title:"Formio — Immigration Software for Canadian Consultants", description:"Automate your intake forms, IRCC pre-fill, and legal docs.", url:"https://formio.ca", siteName:"Formio", locale:"fr_CA", type:"website"}, twitter:{card:"summary_large_image", title:"Formio", description:"Immigration software for Canadian consultants"}.
+
+2) Remove the redundant manual Google Fonts link tags from the head (the two preconnect tags pointing to fonts.googleapis.com and fonts.gstatic.com, and any Google Fonts stylesheet link). EB Garamond and Figtree are already loaded via next/font/google — the manual links are duplicate blocking requests.
+
+3) Add this tag in head: &lt;link rel="alternate" hrefLang="fr-CA" href="https://formio.ca" /&gt;
+
+Stack: Next.js 15 App Router, TypeScript.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-yellow">6</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Build a Pricing Page with Competitor Comparison Table</div>
+        <div class="step-subtitle">src/app/pricing/page.tsx — the only pricing page in the market with a transparent comparison</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-med">Effort: Medium</span>
+        <span class="badge badge-time">~1 day</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-why">
+          <span class="callout-icon">💰</span>
+          <div>CaseEasy hides pricing. Visto charges $199–$999/month with application caps. VisaFlo has no public pricing at all. <strong>Being the only product with transparent, honest pricing is a conversion signal, a trust signal, and an SEO signal.</strong> Buyers who are comparison shopping reward this. Google rewards clear pricing pages with higher quality scores.</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Page structure</div>
+        <div class="page-structure">
+          <div class="ps-row"><div class="ps-icon ps-h1">H1</div><div class="ps-label">Pricing</div><div class="ps-desc">Simple, transparent. No surprises.</div></div>
+          <div class="ps-row"><div class="ps-icon ps-section">§</div><div class="ps-label">Pricing tiers (2–3 plans)</div><div class="ps-desc">Monthly / annual toggle. Clear feature list per tier.</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">How Formio compares</div><div class="ps-desc">Table: Formio vs CaseEasy vs Visto — 8–10 rows of honest feature comparison</div></div>
+          <div class="ps-row"><div class="ps-icon ps-faq">§</div><div class="ps-label">Pricing FAQ (3–4 Qs)</div><div class="ps-desc">Can I switch plans? What happens after trial? Overage costs?</div></div>
+          <div class="ps-row"><div class="ps-icon ps-cta">CTA</div><div class="ps-label">Start free trial</div><div class="ps-desc">No credit card · 14-day trial · Cancel anytime</div></div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Comparison table — exact rows to include</div>
+        <table class="data-table">
+          <thead><tr><th>Feature</th><th>Formio</th><th>CaseEasy</th><th>Visto</th></tr></thead>
+          <tbody>
+            <tr><td>Custom intake forms</td><td>✓ Full builder</td><td>Smart Qs (limited)</td><td>Template only</td></tr>
+            <tr><td>IRCC form autofill</td><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Application caps</td><td>None (unlimited)</td><td>None</td><td>10–55/month cap</td></tr>
+            <tr><td>Free trial</td><td>14 days</td><td>7 days</td><td>30 days</td></tr>
+            <tr><td>Canadian data storage</td><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Client portal</td><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><td>Starting price</td><td>[Your price]</td><td>~$79/user/mo</td><td>$199/mo (10 apps)</td></tr>
+            <tr><td>Built by immigration pros</td><td>✓</td><td>–</td><td>✓ (lawyer)</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:8px; font-size:13px; color: var(--faint);">Note: Be factual, not snarky. Incorrect competitor data will hurt credibility. Verify all competitor claims before publishing.</p>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">Create src/app/pricing/page.tsx. Export metadata: title:"Formio Pricing — Transparent Immigration Software Plans", description:"Simple, transparent pricing for Canadian immigration consultants. No application caps, no hidden fees. Free trial available."
+
+Page structure: H1 "Simple, transparent pricing". Three pricing tier cards (Starter / Growth / Firm) with placeholder prices and a monthly/annual toggle. A comparison table (H2 "How Formio compares") with these rows: custom form builder (Full builder / Smart Qs limited / Template only), IRCC form autofill (✓/✓/✓), application caps (None / None / 10–55/month), free trial (14d / 7d / 30d), Canadian data storage (✓/✓/✓), starting price ([Your price] / ~$79/user/mo / $199/mo). Columns: Formio / CaseEasy / Visto. A 3-question FAQ section with FAQPage schema JSON-LD. A CTA section "Start your free trial". Use the existing design system — CSS variables --font-garamond for headings, --font-figtree for body, match existing section styling from page.tsx.
+
+Also add {url:"https://formio.ca/pricing", lastModified:new Date(), changeFrequency:"monthly", priority:0.9} to src/app/sitemap.ts.
+
+Stack: Next.js 15 App Router, TypeScript, Tailwind CSS.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  PHASE 3 — NEW PAGES                       -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="phase-header">
+    <span class="phase-label phase-3">Phase 3</span>
+    <h2>New High-Value Pages</h2>
+    <span class="phase-meta">Weeks 4–6 · Each page targets a specific keyword cluster no competitor owns</span>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-green">7</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Custom Forms Feature Page</div>
+        <div class="step-subtitle">src/app/features/custom-forms/page.tsx — the #1 uncontested keyword cluster in this market</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-med">Effort: Medium</span>
+        <span class="badge badge-time">~1 day</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-why">
+          <span class="callout-icon">🏆</span>
+          <div>This is Formio's core differentiator that no competitor has claimed. "Immigration form builder Canada", "custom RCIC intake forms", "custom immigration questionnaire" are zero-competition keywords with real buyer intent. The firm that publishes this page first owns the category. Every competitor is stuck in "autofill" framing — Formio can own "form builder."</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Target keywords (exact)</div>
+        <ul class="check-list">
+          <li><strong>Primary:</strong> "custom immigration intake forms Canada"</li>
+          <li><strong>Primary:</strong> "immigration form builder for RCIC"</li>
+          <li><strong>Secondary:</strong> "custom IRCC questionnaire software"</li>
+          <li><strong>Secondary:</strong> "immigration client intake form builder"</li>
+          <li><strong>Long-tail:</strong> "how to create custom intake forms for immigration clients"</li>
+        </ul>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Exact page structure</div>
+        <div class="page-structure">
+          <div class="ps-row"><div class="ps-icon ps-h1">H1</div><div class="ps-label">Custom Intake Forms for Immigration Consultants</div><div class="ps-desc">Keyword-optimized, clear benefit</div></div>
+          <div class="ps-row"><div class="ps-icon ps-section">§</div><div class="ps-label">Hero with demo/screenshot</div><div class="ps-desc">Show the form builder interface — visual proof</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">Why custom forms matter for your practice</div><div class="ps-desc">Problem framing — replaces Word docs, email chains</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">Build, modify, and import your own forms</div><div class="ps-desc">3-feature breakdown: build from scratch, fork existing, import from Word/PDF</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">Works with every visa type</div><div class="ps-desc">Express Entry, PNP, TRV, Study Permit, LMIA, Arrima (QC)</div></div>
+          <div class="ps-row"><div class="ps-icon ps-faq">FAQ</div><div class="ps-label">4–5 targeted FAQs</div><div class="ps-desc">With FAQPage schema. Questions: "Can I create different forms per case type?", "Do custom forms sync with IRCC autofill?"</div></div>
+          <div class="ps-row"><div class="ps-icon ps-cta">CTA</div><div class="ps-label">Start building your first form →</div><div class="ps-desc">Trial CTA with "no credit card" friction reducer</div></div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Key copy to write</div>
+        <div class="copy-block">
+          <div class="copy-label">H1</div>
+          Custom Intake Forms for Canadian Immigration Consultants
+        </div>
+        <div class="copy-block">
+          <div class="copy-label">Opening paragraph (sets the category)</div>
+          Every immigration firm has a different workflow. Formio lets you build the exact intake form your practice needs — from scratch, or by modifying our template library. Stop adapting your process to your software. Make your software adapt to you.
+        </div>
+        <div class="copy-block">
+          <div class="copy-label">Meta description</div>
+          Build custom intake forms for any visa type — Express Entry, PNP, TRV, and more. Formio's form builder is designed for Canadian RCICs and immigration lawyers. Free trial.
+        </div>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">Create src/app/features/custom-forms/page.tsx. Export metadata: title:"Custom Immigration Intake Forms for Canadian Consultants | Formio", description:"Build custom intake forms for any visa type — Express Entry, PNP, TRV, and more. Designed for Canadian RCICs and immigration lawyers. Free trial."
+
+Page structure:
+- H1: "Custom Intake Forms for Canadian Immigration Consultants"
+- Opening paragraph: "Every immigration firm has a different workflow. Formio lets you build the exact intake form your practice needs — from scratch, or by modifying our template library. Stop adapting your process to your software."
+- H2: "Why custom forms matter for your practice" — problem framing: Word docs, email chains, rigid one-size templates
+- H2: "Build, modify, and import your own forms" — 3-feature breakdown: (1) build from scratch, (2) fork existing Formio templates, (3) import Word/PDF forms via AI extraction
+- H2: "Works with every visa type" — 6-item grid: Express Entry, PNP, Visitor Visa, Study Permit, Work Permit, Arrima (QC)
+- FAQ section (5 questions) with FAQPage schema JSON-LD
+- CTA: "Start building your first form →" with "No credit card required"
+
+Match the existing design system from page.tsx. Also add {url:"https://formio.ca/features/custom-forms", lastModified:new Date(), changeFrequency:"monthly", priority:0.9} to src/app/sitemap.ts.
+
+Stack: Next.js 15 App Router, TypeScript, Tailwind CSS.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 8 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-green">8</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Comparison Pages: Formio vs CaseEasy + vs Visto + vs VisaFlo</div>
+        <div class="step-subtitle">src/app/vs/[competitor]/page.tsx — capture competitor brand searches, the highest-intent traffic</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-med">Effort: Medium</span>
+        <span class="badge badge-time">~2 days (all 3)</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-why">
+          <span class="callout-icon">🎯</span>
+          <div>Anyone searching "Formio vs CaseEasy" or "CaseEasy alternative" is a <strong>buyer ready to switch</strong>. This is the highest-intent traffic in B2B SaaS. VisaFlo does this (vs Clio, vs CaseEasy) and it's the smartest thing they do — but their pages are blocked by 403. You can outrank them on their own strategy immediately. No competitor has "Formio vs X" pages, meaning you win every comparison SERP by default.</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">URLs to create</div>
+        <ul class="check-list">
+          <li><strong>/vs/caseeasy</strong> — "Formio vs CaseEasy: Which is better for Canadian immigration firms?"</li>
+          <li><strong>/vs/visto</strong> — "Formio vs Visto: Immigration software comparison"</li>
+          <li><strong>/vs/visaflo</strong> — "Formio vs VisaFlo: Features, pricing, and key differences"</li>
+        </ul>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Template structure (use for all 3 pages)</div>
+        <div class="page-structure">
+          <div class="ps-row"><div class="ps-icon ps-h1">H1</div><div class="ps-label">Formio vs [Competitor]: [Year] Comparison</div><div class="ps-desc">Include year for freshness signal</div></div>
+          <div class="ps-row"><div class="ps-icon ps-section">§</div><div class="ps-label">TL;DR summary box</div><div class="ps-desc">2-sentence winner declaration — "Formio is better for X, [Competitor] is better for Y"</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">Feature comparison table</div><div class="ps-desc">10–12 rows, honest, sourced</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">Formio strengths</div><div class="ps-desc">Custom forms, speed, pricing — what you do better</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">[Competitor] strengths</div><div class="ps-desc">Be honest — trust comes from honesty. E.g., "CaseEasy has been in the market since 2017 and has a large user community."</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">Who should use each</div><div class="ps-desc">Specific buyer scenarios — "If you need X, use Formio. If you need Y, consider [Competitor]."</div></div>
+          <div class="ps-row"><div class="ps-icon ps-faq">FAQ</div><div class="ps-label">3 targeted FAQs per page</div><div class="ps-desc">With FAQPage schema. "Can I migrate from CaseEasy to Formio?", "Is Formio cheaper than Visto?"</div></div>
+          <div class="ps-row"><div class="ps-icon ps-cta">CTA</div><div class="ps-label">Try Formio free for 14 days →</div><div class="ps-desc">Side-by-side trial offer. "See the difference yourself."</div></div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Rules for writing honest comparison pages</div>
+        <ul class="check-list">
+          <li>Every competitor claim must be verifiable (link to their pricing page, not just "they cost a lot")</li>
+          <li>Acknowledge where the competitor wins — this is what makes the page credible</li>
+          <li><strong>Never</strong> make false claims — one viral screenshot of a misleading comparison will destroy trust</li>
+          <li>Update every comparison page when competitor pricing or features change</li>
+          <li>Add a "Last verified: [date]" note at the top for freshness signals</li>
+        </ul>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">Create src/app/vs/[competitor]/page.tsx as a Next.js App Router dynamic route. Use generateStaticParams to pre-render slugs: ["caseeasy", "visto", "visaflo"]. Use generateMetadata(params) for per-competitor title/description.
+
+Competitor data:
+- caseeasy: name:"CaseEasy", founded:"2017", pricing:"~$79/user/month (not shown on homepage)", trial:"7 days", reviews:"3.7★ on Capterra (3 reviews)", caps:"None", strength:"Most established Canadian immigration CRM since 2017"
+- visto: name:"Visto", founded:"~2022", pricing:"$199–$999/month with 10–55 application caps", trial:"30 days", reviews:"Effectively 0 verified reviews", caps:"10–55 apps/month + $29/overage", strength:"Built by immigration lawyer, strong AI branding"
+- visaflo: name:"VisaFlo", founded:"~2024", pricing:"Not public — invitation only", trial:"4 weeks", reviews:"Not listed on Capterra or G2", caps:"Unknown", strength:"Strong comparison content strategy and quantified case studies"
+
+Each page renders: H1 "Formio vs [Name]: 2026 Comparison", a TL;DR summary box (2-sentence honest assessment), 10-row feature comparison table, H2 "Where Formio wins", H2 "Where [Competitor] wins" (be honest — credibility matters), H2 "Who should use each" (specific buyer scenarios), FAQ (3 questions) with FAQPage schema JSON-LD, CTA "Try Formio free for 14 days".
+
+Add all 3 routes to src/app/sitemap.ts. Stack: Next.js 15 App Router, TypeScript, Tailwind CSS.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 9 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-green">9</div>
+      <div class="step-title-wrap">
+        <div class="step-title">CICC Compliance Guide (Long-Form Resource Page)</div>
+        <div class="step-subtitle">src/app/resources/cicc-compliance/page.tsx — own the highest-intent, zero-competition keyword cluster</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-med">Effort: Medium</span>
+        <span class="badge badge-time">~1.5 days</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-why">
+          <span class="callout-icon">📋</span>
+          <div>Every RCIC in Canada must meet CICC (College of Immigration and Citizenship Consultants) client file management requirements. <strong>Zero competitors publish content targeting this keyword cluster.</strong> An immigration consultant Googling "CICC compliance software" or asking ChatGPT "how to stay CICC compliant" should find Formio. This page turns a compliance anxiety into a product sale.</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Target keywords</div>
+        <ul class="check-list">
+          <li><strong>Primary:</strong> "CICC compliant immigration software"</li>
+          <li><strong>Primary:</strong> "RCIC client file management requirements Canada"</li>
+          <li><strong>Secondary:</strong> "CICC compliance checklist for consultants 2026"</li>
+          <li><strong>Long-tail:</strong> "how to meet CICC client file management standards"</li>
+        </ul>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Page structure (long-form, ~1,500 words)</div>
+        <div class="page-structure">
+          <div class="ps-row"><div class="ps-icon ps-h1">H1</div><div class="ps-label">CICC Compliance Guide for Immigration Software (2026)</div><div class="ps-desc">Year in title = freshness signal</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">What are CICC client file management requirements?</div><div class="ps-desc">Authoritative summary of the actual CICC rules (cite cicc.ca)</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">What your immigration software must support</div><div class="ps-desc">Checklist format: document retention, client consent, secure access, etc.</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">How Formio meets CICC requirements</div><div class="ps-desc">Feature-by-requirement mapping — the product pitch embedded in the guide</div></div>
+          <div class="ps-row"><div class="ps-icon ps-h2">H2</div><div class="ps-label">CICC compliance checklist (downloadable)</div><div class="ps-desc">PDF checklist as lead magnet — captures email, builds list</div></div>
+          <div class="ps-row"><div class="ps-icon ps-faq">FAQ</div><div class="ps-label">CICC compliance FAQs (5 Qs)</div><div class="ps-desc">With FAQPage schema. "Is CaseEasy CICC compliant?" etc.</div></div>
+          <div class="ps-row"><div class="ps-icon ps-cta">CTA</div><div class="ps-label">See how Formio handles compliance →</div><div class="ps-desc">Demo CTA</div></div>
+        </div>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">Create src/app/resources/cicc-compliance/page.tsx — a ~1,500 word long-form resource page. Export metadata: title:"CICC Compliance Guide for Immigration Software 2026 | Formio", description:"Complete guide to CICC client file management requirements for Canadian RCICs. Learn what your immigration software must support to stay compliant in 2026."
+
+Page structure:
+- H1: "CICC Compliance Guide for Immigration Software (2026)"
+- H2: "What are CICC client file management requirements?" — authoritative summary citing cicc.ca
+- H2: "What your immigration software must support" — checklist: encrypted storage, Canadian data residency, access logs, client consent tracking, document retention, secure file sharing
+- H2: "How Formio meets CICC requirements" — table mapping each requirement to a Formio feature
+- H2: "CICC Compliance Checklist" — printable format with visual checkboxes
+- FAQ (5 questions) with FAQPage schema JSON-LD: "Is CaseEasy CICC compliant?", "What are the consequences of non-compliance?", "Does Formio store data on Canadian servers?", "How does Formio handle client consent?", "Can I use Formio records during a CICC audit?"
+- Add Article schema JSON-LD with author, datePublished, dateModified
+- CTA: "See how Formio handles compliance →"
+
+Add {url:"https://formio.ca/resources/cicc-compliance"} to src/app/sitemap.ts. Stack: Next.js 15 App Router, TypeScript, Tailwind CSS.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 10 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-green">10</div>
+      <div class="step-title-wrap">
+        <div class="step-title">How It Works — Dedicated Page with HowTo Schema</div>
+        <div class="step-subtitle">src/app/how-it-works/page.tsx — structured workflow content optimized for AI excerpt</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-low">Effort: Low</span>
+        <span class="badge badge-time">~4 hours</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-info">
+          <span class="callout-icon">🤖</span>
+          <div>The homepage "2-step" How It Works section is good but insufficient for GEO. AI tools love to excerpt step-by-step processes. A dedicated /how-it-works page with HowTo schema (7–8 steps, not 2) gives Perplexity and ChatGPT a citable, structured answer to "how does Formio work" — and ranks for process-intent queries like "how to automate IRCC forms".</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">HowTo schema structure (add to page's JSON-LD)</div>
+        <div class="code-block">{
+  <span class="c-str">"@type"</span>: <span class="c-val">"HowTo"</span>,
+  <span class="c-str">"name"</span>: <span class="c-val">"How to automate immigration client intake with Formio"</span>,
+  <span class="c-str">"step"</span>: [
+    { <span class="c-str">"@type"</span>: <span class="c-val">"HowToStep"</span>, <span class="c-str">"name"</span>: <span class="c-val">"Send your client an intake link"</span>,
+      <span class="c-str">"text"</span>: <span class="c-val">"Generate a personalized intake form link from your Formio dashboard and send it to your client by email or text."</span> },
+    { <span class="c-str">"@type"</span>: <span class="c-val">"HowToStep"</span>, <span class="c-str">"name"</span>: <span class="c-val">"Client uploads their documents"</span>,
+      <span class="c-str">"text"</span>: <span class="c-val">"Your client uploads their passport, résumé, and supporting documents directly through the Formio client portal — no account required."</span> },
+    { <span class="c-str">"@type"</span>: <span class="c-val">"HowToStep"</span>, <span class="c-str">"name"</span>: <span class="c-val">"Formio extracts data automatically"</span>,
+      <span class="c-str">"text"</span>: <span class="c-val">"Formio's AI reads the uploaded documents and extracts name, date of birth, passport number, work history, and more — pre-filling 70% of the form."</span> },
+    { <span class="c-str">"@type"</span>: <span class="c-val">"HowToStep"</span>, <span class="c-str">"name"</span>: <span class="c-val">"Client answers remaining questions"</span>,
+      <span class="c-str">"text"</span>: <span class="c-val">"Your client completes the remaining questions — simple yes/no and multiple choice — directly on their phone or desktop."</span> },
+    { <span class="c-str">"@type"</span>: <span class="c-val">"HowToStep"</span>, <span class="c-str">"name"</span>: <span class="c-val">"IRCC and IMM forms are pre-filled"</span>,
+      <span class="c-str">"text"</span>: <span class="c-val">"Formio uses the collected data to pre-fill the relevant IRCC forms, IMM PDFs, and Arrima forms — ready for your review in under 2 minutes."</span> },
+    { <span class="c-str">"@type"</span>: <span class="c-val">"HowToStep"</span>, <span class="c-str">"name"</span>: <span class="c-val">"You review, verify, and submit"</span>,
+      <span class="c-str">"text"</span>: <span class="c-val">"You retain full control. Review the pre-filled forms, make any corrections, and submit the final application yourself."</span> }
+  ]
+}</div>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">Create src/app/how-it-works/page.tsx. Export metadata: title:"How Formio Works — Automate IRCC Forms in 6 Steps", description:"See exactly how Formio automates client intake and IRCC form filling for Canadian immigration consultants. A simple 6-step process."
+
+Page: H1 "How Formio Works". 6 numbered steps displayed visually (large step number, title, description, time-saved callout):
+1) "Send your client an intake link" — generate from dashboard, send by email or text. Save: 15 min per client.
+2) "Client uploads their documents" — passport, résumé, and docs via client portal, no account required. Save: back-and-forth eliminated.
+3) "Formio extracts data automatically" — AI reads docs, extracts name/DOB/passport/work history, pre-fills 70% of the form.
+4) "Client answers remaining questions" — yes/no and multiple choice on any device. Time: ~10 minutes for client.
+5) "IRCC and IMM forms are pre-filled" — all IRCC forms, IMM PDFs, Arrima ready in under 2 minutes.
+6) "You review, verify, and submit" — full control. You submit. Total time saved: up to 4 hours per application.
+
+Add HowTo schema JSON-LD matching all 6 steps exactly (name + text per step). Add {url:"https://formio.ca/how-it-works"} to src/app/sitemap.ts. Stack: Next.js 15 App Router, TypeScript, Tailwind CSS.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  PHASE 4 — AUTHORITY & GEO                 -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="phase-header">
+    <span class="phase-label phase-4">Phase 4</span>
+    <h2>Authority Building &amp; GEO Domination</h2>
+    <span class="phase-meta">Month 2–3 · Compounding plays · Become the AI-cited default</span>
+  </div>
+
+  <!-- STEP 11 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-purple">11</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Get 15+ Verified Reviews on Capterra and G2</div>
+        <div class="step-subtitle">Off-site — but the single highest ROI activity in the entire plan</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-low">Effort: Low</span>
+        <span class="badge badge-time">~1 week (outreach)</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters — the GEO connection</div>
+        <div class="callout callout-why">
+          <span class="callout-icon">🤖</span>
+          <div>When ChatGPT or Perplexity answers "what's the best Canadian immigration software," it sources from Capterra, G2, and review aggregators. CaseEasy has 3 reviews (3.7★). Visto and VisaFlo are essentially unlisted. <strong>15 reviews at 4.5+ stars makes Formio the top-rated option on every platform that AI tools cite</strong> — and you become the default recommendation in under 90 days.</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Exact execution steps</div>
+        <ul class="check-list">
+          <li><strong>Week 1:</strong> Create Formio profiles on Capterra, G2, TrustPilot, and Software Advice</li>
+          <li><strong>Week 1:</strong> Email your 10 most active users with a direct link to your Capterra review page — personalize each email</li>
+          <li><strong>Week 2:</strong> Follow up with users who didn't review — offer a bonus feature / extended trial as thanks</li>
+          <li><strong>Ongoing:</strong> Add a Capterra review request to your post-trial offboarding email sequence</li>
+          <li><strong>Goal:</strong> 15 verified reviews in 90 days. Even 10 reviews at 4.5★ makes you #1 in the category.</li>
+          <li>Do <strong>not</strong> incentivize specific star ratings — that violates Capterra policy and can get the reviews removed</li>
+        </ul>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">Write two email templates and a verbal script for requesting Capterra reviews, then save everything to src/content/review-outreach.md.
+
+Email 1 (initial ask): write a non-generic subject line; use a friendly founder tone; briefly explain why reviews matter to a small Canadian immigration software startup competing with bigger players; include [CAPTERRA_LINK] placeholder; keep the body under 150 words; add a P.S. offering extended trial or early feature access as a genuine thank-you. Do NOT ask for 5 stars.
+
+Email 2 (5-day follow-up): shorter (under 80 words), different angle from Email 1 — try a different hook (e.g., "quick favor" framing, or a specific pain point they solved). Not a reminder of Email 1.
+
+Verbal script: 3 sentences to say out loud during a live onboarding call or demo, right after a positive moment. Natural, not scripted-sounding.
+
+Format all three with [PLACEHOLDER] variables. Save to src/content/review-outreach.md.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 12 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-purple">12</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Build Entity Presence (Crunchbase, LinkedIn, Wikidata)</div>
+        <div class="step-subtitle">Off-site infrastructure — makes Formio a known, unambiguous entity to LLMs</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-low">Effort: Low</span>
+        <span class="badge badge-time">~3 hours total</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-info">
+          <span class="callout-icon">🔍</span>
+          <div>GEO requires LLMs to have a clear, unambiguous understanding of what Formio is. If Formio only exists on its own website, AI tools treat it as low-confidence. Crunchbase + LinkedIn Company Page + consistent Name/Address/Phone across directories creates an entity graph that LLMs recognize and cite confidently. Visto does this better than any competitor — match and exceed it.</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Checklist — each takes 20–30 minutes</div>
+        <ul class="check-list">
+          <li><strong>Crunchbase:</strong> Create company profile — include founding date, location (city, province), description (2–3 sentences), website, founders' names</li>
+          <li><strong>LinkedIn Company Page:</strong> Full profile with "About" text that includes keywords ("Canadian immigration software", "RCIC"), employee count, location</li>
+          <li><strong>AngelList / Wellfound:</strong> Create startup profile</li>
+          <li><strong>Product Hunt:</strong> Submit Formio — this generates backlinks and tech press coverage</li>
+          <li><strong>Google Business Profile:</strong> Create entry even as a remote/software company — confirms Canadian entity</li>
+          <li><strong>Consistency rule:</strong> Use the exact same company name, URL, and description everywhere. "Formio" (not "Formio Inc", not "formio.ca") — pick one and stick to it.</li>
+        </ul>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">Write all directory listing and entity copy for Formio, then save to src/content/directory-copy.md.
+
+Deliver these 5 versions:
+1) 150-char tagline (for LinkedIn headline and Product Hunt tagline)
+2) 300-char one-liner (for Crunchbase / AngelList short description)
+3) 500-char description (for Crunchbase long description)
+4) LinkedIn Company Page "About" section (~200 words, 2 paragraphs — what the company does and who it's for)
+5) Product Hunt launch description (~250 words: strong opening hook, 3 bullet features with specific outcomes, closing CTA)
+
+Requirements for ALL versions: include "Canadian immigration software", include "RCIC", include one quantified outcome (e.g. "saves up to 4 hours per application"), mention Canada or Quebec context. No generic startup language — be specific about what Formio actually does differently.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 13 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-purple">13</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Launch a Blog: 3 Foundational Posts to Own AI Citation</div>
+        <div class="step-subtitle">src/app/blog/ — target the content gaps all three competitors left open</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-high">Impact: High</span>
+        <span class="badge badge-effort-high">Effort: High</span>
+        <span class="badge badge-time">~3 days (all 3 posts)</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <div class="callout callout-why">
+          <span class="callout-icon">📝</span>
+          <div>CaseEasy's blog exists but never targets buyer questions. Visto's blog is 16 months dead. VisaFlo's is blocked. The entire category's content footprint is thin. <strong>Three excellent posts targeted at real buyer intent will outrank everything in this market within 90 days</strong> because the bar is so low.</div>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="section-label">The 3 posts to write first (in this order)</div>
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Title</th><th>Target keyword</th><th>Why this one first</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Post 1</td>
+              <td>"CICC Client File Management Requirements: What Every RCIC Needs to Know in 2026"</td>
+              <td>"CICC client file management requirements"</td>
+              <td>Zero competition. High purchase intent. Evergreen. AI will cite this as the authoritative source.</td>
+            </tr>
+            <tr>
+              <td>Post 2</td>
+              <td>"Best Immigration Software for Canadian Consultants in 2026: Honest Comparison"</td>
+              <td>"best immigration software Canada 2026"</td>
+              <td>The highest-volume keyword in the category. Mention all competitors honestly. You control the narrative.</td>
+            </tr>
+            <tr>
+              <td>Post 3</td>
+              <td>"How to Automate Your IRCC Form Workflow: A Step-by-Step Guide for RCICs"</td>
+              <td>"automate IRCC forms" / "IRCC form automation Canada"</td>
+              <td>Process-intent keyword. Gets shared by consultants. AI loves step-by-step guides.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Blog infrastructure requirements</div>
+        <ul class="check-list">
+          <li>Use Next.js App Router dynamic routes: <code>src/app/blog/[slug]/page.tsx</code></li>
+          <li>Each post needs: Article schema JSON-LD, author name, publish date, last modified date</li>
+          <li>Add a blog index at <code>/blog</code> with post cards — this page itself targets "immigration software blog Canada"</li>
+          <li>Every post must have an internal link to a product page (custom forms, pricing, or comparison)</li>
+          <li>Minimum post length: 1,200 words. Target: 1,800–2,200 words for the first 3 posts.</li>
+        </ul>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">Write Formio's first blog post and save it to src/content/blog/cicc-client-file-management-requirements.md.
+
+Title: "CICC Client File Management Requirements: What Every RCIC Needs to Know in 2026"
+Target keyword: "CICC client file management requirements"
+Length: 1,800–2,200 words
+Audience: RCIC firm owners
+
+Structure:
+- Intro (150w) — state the compliance stakes clearly, what's at risk if you get this wrong
+- H2 "What is the CICC?" (100w) — brief, authoritative
+- H2 "The 6 Requirements Every RCIC Must Meet" (600w) — document retention, secure storage, client consent, audit trails, file organization, access controls. For each: what the requirement says + a practical note for implementing it
+- H2 "Common Compliance Mistakes" (250w) — 4 specific pitfalls RCICs actually make (not generic)
+- H2 "How to Choose Compliant Immigration Software" (300w) — evaluation checklist that leads naturally to Formio without being a sales pitch
+- Conclusion + CTA (150w)
+
+Tone: professional but practical. No regulatory jargon without plain-language explanation. End the file with an Article schema JSON-LD block in a fenced code block.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 14 -->
+  <div class="step-card">
+    <div class="step-header">
+      <div class="step-num num-purple">14</div>
+      <div class="step-title-wrap">
+        <div class="step-title">Set Up Core Web Vitals Monitoring + Performance Baseline</div>
+        <div class="step-subtitle">Vercel Analytics / Google Search Console — make sure the work you're doing actually gets indexed</div>
+      </div>
+      <div class="step-badges">
+        <span class="badge badge-impact-med">Impact: Medium</span>
+        <span class="badge badge-effort-low">Effort: Low</span>
+        <span class="badge badge-time">~2 hours</span>
+      </div>
+    </div>
+    <div class="step-body">
+      <div class="step-section">
+        <div class="section-label">Why it matters</div>
+        <p>All the SEO work above is wasted if pages aren't indexed or if poor LCP/CLS scores suppress rankings. The current site uses GSAP CDN scripts loaded with <code>afterInteractive</code> — this is fine, but worth verifying it doesn't hurt LCP on mobile.</p>
+      </div>
+      <div class="step-section">
+        <div class="section-label">Exact setup checklist</div>
+        <ul class="check-list">
+          <li><strong>Google Search Console:</strong> Verify formio.ca, submit sitemap.xml URL, check for crawl errors</li>
+          <li><strong>Vercel Analytics:</strong> Enable in dashboard — gives Core Web Vitals per route</li>
+          <li><strong>Check current state:</strong> Run PageSpeed Insights on homepage — note LCP, CLS, FID scores</li>
+          <li><strong>GSAP audit:</strong> The current CDN load from cdn.prod.website-files.com is not official — switch to the official GSAP CDN or npm package to avoid availability risk</li>
+          <li><strong>Font optimization:</strong> Both EB Garamond and Figtree are loaded via next/font (good) but the additional Google Fonts CSS in layout.tsx &lt;head&gt; is redundant — remove the manual &lt;link&gt; tags to reduce blocking requests</li>
+        </ul>
+      </div>
+      <div class="step-section prompt-section">
+        <div class="section-label">Claude Code Prompt</div>
+        <div class="prompt-wrap">
+          <div class="prompt-text">Audit and fix two performance issues in this Next.js 15 project.
+
+1) In src/app/layout.tsx: find and remove the manual Google Fonts link tags in the head — the two &lt;link rel="preconnect"&gt; tags pointing to fonts.googleapis.com and fonts.gstatic.com, and any &lt;link rel="stylesheet"&gt; pointing to a Google Fonts CSS URL. These are redundant because EB Garamond and Figtree are already loaded via next/font/google at the top of the file. Removing them eliminates render-blocking requests.
+
+2) In src/app/page.tsx: find the &lt;Script&gt; tag loading GSAP from the unofficial CDN (currently pointing to cdn.prod.website-files.com/gsap/3.14.2/). Replace it with the official GSAP CDN: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.2/gsap.min.js and https://cdnjs.cloudflare.com/ajax/libs/gsap/3.14.2/ScrollTrigger.min.js. Keep the same strategy="afterInteractive" attribute.
+
+After making these changes, tell me: (a) what LCP, CLS, and INP scores to target in Google PageSpeed Insights, and (b) the 3 most important things to verify in Google Search Console after deploying the sitemap from Step 2.
+
+Stack: Next.js 15 App Router, TypeScript.</div>
+          <button class="copy-btn" onclick="copyPrompt(this)">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  MASTER CHECKLIST                          -->
+  <!-- ══════════════════════════════════════════ -->
+  <div style="margin-top: 56px; padding-bottom: 16px; border-bottom: 2px solid var(--border); margin-bottom: 24px;">
+    <div style="font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:8px;">Master Checklist</div>
+    <h2 style="font-size:28px; font-weight:800; letter-spacing:-.02em;">Ship Order — All 14 Steps</h2>
+  </div>
+
+  <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden;">
+    <table style="width:100%; border-collapse:collapse; font-size:13px;">
+      <thead>
+        <tr style="background:var(--surface2);">
+          <th style="padding:10px 16px; text-align:left; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">#</th>
+          <th style="padding:10px 16px; text-align:left; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">Step</th>
+          <th style="padding:10px 16px; text-align:left; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">File / Location</th>
+          <th style="padding:10px 16px; text-align:left; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">Impact</th>
+          <th style="padding:10px 16px; text-align:left; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">Effort</th>
+          <th style="padding:10px 16px; text-align:left; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--border);">Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(239,68,68,.04)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--red2); font-weight:800;">P1</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">1 · Schema markup (FAQPage + SoftwareApplication + Organization)</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted); font-family:monospace; font-size:12px;">layout.tsx</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--blue2); font-weight:700;">Low</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">2h</td>
+        </tr>
+        <tr style="background:rgba(239,68,68,.04)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--red2); font-weight:800;">P1</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">2 · robots.txt + sitemap.xml</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted); font-family:monospace; font-size:12px;">app/robots.ts + app/sitemap.ts</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--blue2); font-weight:700;">Low</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">30m</td>
+        </tr>
+        <tr style="background:rgba(239,68,68,.04)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--red2); font-weight:800;">P1</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">3 · Named testimonials with attribution</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted); font-family:monospace; font-size:12px;">page.tsx (new section)</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--blue2); font-weight:700;">Low</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">3h + outreach</td>
+        </tr>
+        <tr style="background:rgba(245,158,11,.04)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--yellow2); font-weight:800;">P2</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">4 · Expand FAQ: 5 → 12 questions</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted); font-family:monospace; font-size:12px;">page.tsx + layout.tsx</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--blue2); font-weight:700;">Low</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">2h</td>
+        </tr>
+        <tr style="background:rgba(245,158,11,.04)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--yellow2); font-weight:800;">P2</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">5 · Rewrite metadata for English SEO + hreflang</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted); font-family:monospace; font-size:12px;">layout.tsx</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--blue2); font-weight:700;">Low</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">1h</td>
+        </tr>
+        <tr style="background:rgba(245,158,11,.04)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--yellow2); font-weight:800;">P2</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">6 · Pricing page with competitor comparison table</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted); font-family:monospace; font-size:12px;">app/pricing/page.tsx</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--yellow2); font-weight:700;">Med</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">1 day</td>
+        </tr>
+        <tr style="background:rgba(34,197,94,.03)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:800;">P3</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">7 · Custom Forms feature landing page</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted); font-family:monospace; font-size:12px;">app/features/custom-forms/page.tsx</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--yellow2); font-weight:700;">Med</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">1 day</td>
+        </tr>
+        <tr style="background:rgba(34,197,94,.03)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:800;">P3</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">8 · Comparison pages (×3: CaseEasy, Visto, VisaFlo)</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted); font-family:monospace; font-size:12px;">app/vs/[competitor]/page.tsx</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--yellow2); font-weight:700;">Med</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">2 days</td>
+        </tr>
+        <tr style="background:rgba(34,197,94,.03)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:800;">P3</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">9 · CICC Compliance Guide (long-form resource)</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted); font-family:monospace; font-size:12px;">app/resources/cicc-compliance/page.tsx</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--yellow2); font-weight:700;">Med</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">1.5 days</td>
+        </tr>
+        <tr style="background:rgba(34,197,94,.03)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:800;">P3</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">10 · How It Works page with HowTo schema</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted); font-family:monospace; font-size:12px;">app/how-it-works/page.tsx</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--blue2); font-weight:700;">Low</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">4h</td>
+        </tr>
+        <tr style="background:rgba(99,102,241,.04)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--accent2); font-weight:800;">P4</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">11 · 15+ verified reviews on Capterra + G2</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">Off-site — user outreach</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--blue2); font-weight:700;">Low</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">1w outreach</td>
+        </tr>
+        <tr style="background:rgba(99,102,241,.04)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--accent2); font-weight:800;">P4</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">12 · Entity presence (Crunchbase, LinkedIn, GBP)</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">Off-site — directory listings</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--blue2); font-weight:700;">Low</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">3h</td>
+        </tr>
+        <tr style="background:rgba(99,102,241,.04)">
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--accent2); font-weight:800;">P4</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--text); font-weight:600;">13 · Blog: 3 foundational posts</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted); font-family:monospace; font-size:12px;">app/blog/[slug]/page.tsx</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--green2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--red2); font-weight:700;">High</td>
+          <td style="padding:10px 16px; border-bottom:1px solid rgba(42,46,69,.4); color:var(--muted);">3 days</td>
+        </tr>
+        <tr style="background:rgba(99,102,241,.04)">
+          <td style="padding:10px 16px; color:var(--accent2); font-weight:800;">P4</td>
+          <td style="padding:10px 16px; color:var(--text); font-weight:600;">14 · Core Web Vitals + Google Search Console setup</td>
+          <td style="padding:10px 16px; color:var(--muted);">Vercel + GSC</td>
+          <td style="padding:10px 16px; color:var(--yellow2); font-weight:700;">Med</td>
+          <td style="padding:10px 16px; color:var(--blue2); font-weight:700;">Low</td>
+          <td style="padding:10px 16px; color:var(--muted);">2h</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- BOTTOM CALLOUT -->
+  <div style="background: linear-gradient(135deg, rgba(99,102,241,.12) 0%, rgba(99,102,241,.04) 100%); border: 1px solid rgba(99,102,241,.3); border-radius:20px; padding:36px 40px; margin-top:48px;">
+    <div style="font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:12px;">The Bottom Line</div>
+    <h2 style="font-size:24px; font-weight:800; letter-spacing:-.01em; margin-bottom:16px;">What winning looks like in 90 days</h2>
+    <p style="color:var(--muted); font-size:15px; margin-bottom:12px;">If you ship all 14 steps, Formio will be the <strong style="color:var(--text)">only Canadian immigration software with</strong>: FAQPage schema + SoftwareApplication schema + a dedicated custom forms page + three comparison pages + a CICC compliance guide + 15+ verified reviews + a live sitemap with 10+ indexed pages.</p>
+    <p style="color:var(--muted); font-size:15px; margin-bottom:12px;">CaseEasy will still have a <strong style="color:var(--text)">10-page sitemap from 2024 and 3 Capterra reviews</strong>. Visto will still have a <strong style="color:var(--text)">dead blog and zero reviews</strong>. VisaFlo will still have a <strong style="color:var(--text)">403 wall blocking every AI crawler</strong>.</p>
+    <p style="color:var(--muted); font-size:15px;"><strong style="color:var(--text)">The bar is low. The plan is clear. Ship Phase 1 this week.</strong></p>
+  </div>
+
+  <div style="margin-top:32px; padding-top:20px; border-top:1px solid var(--border); font-size:12px; color:var(--faint); text-align:center;">
+    Formio Execution Plan · Generated May 2026 · Based on live competitor audit of caseeasy.ca, visto.ai, visaflo.ca
+  </div>
+
+</div>
+<script>
+function copyPrompt(btn) {
+  var text = btn.closest('.prompt-wrap').querySelector('.prompt-text').textContent;
+  navigator.clipboard.writeText(text.trim()).then(function() {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

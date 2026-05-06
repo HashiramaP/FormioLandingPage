@@ -601,6 +601,25 @@ section {
   height: 16px;
 }
 
+.platform-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.btn-link-dark {
+  color: rgba(246, 245, 232, 0.75);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.btn-link-dark:hover {
+  color: var(--cream-on-dark);
+}
+
 /* phone showcase */
 .device-stack {
   display: flex;
@@ -1887,6 +1906,97 @@ section {
   font-size: 1rem;
 }
 
+/* ---------- Testimonials ---------- */
+.testimonials-section {
+  padding: 7rem 1.5rem;
+}
+.testimonials-head {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+.testimonials-eyebrow {
+  display: inline-block;
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gray-muted);
+  margin-bottom: 1.25rem;
+}
+.testimonials-head h2 {
+  font-family: var(--font-garamond), serif;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+}
+.testimonials-line-1 {
+  color: #aaaaaa;
+}
+.testimonials-line-2 {
+  color: #1a1a1a;
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.testimonial-card {
+  background: #ffffff;
+  border: 1px solid var(--border-soft);
+  border-radius: 28px;
+  padding: 2.25rem 2rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  margin: 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.testimonial-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 50px -20px rgba(20, 20, 20, 0.18);
+}
+.testimonial-card blockquote {
+  flex: 1;
+}
+.testimonial-card blockquote p {
+  font-family: var(--font-garamond), serif;
+  font-size: 1.35rem;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--dark);
+  font-weight: 400;
+  font-style: italic;
+}
+.testimonial-card figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-soft);
+}
+.testimonial-card figcaption strong {
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--dark);
+  letter-spacing: -0.005em;
+}
+.testimonial-card figcaption span {
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 0.82rem;
+  color: var(--gray-muted);
+  font-weight: 500;
+}
+
 /* ---------- FAQ — editorial cream ---------- */
 .faq-section {
   padding: 120px 1.5rem;
@@ -2267,6 +2377,68 @@ section {
   transform: translateY(30px);
 }
 
+
+/* ---------- Section CTA ---------- */
+.section-cta {
+  display: flex;
+  justify-content: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-top: 3.5rem;
+}
+
+/* ---------- /faq page ---------- */
+.faq-page {
+  background: var(--cream);
+  min-height: 100vh;
+  padding-bottom: 8rem;
+}
+.faq-page-hero {
+  text-align: center;
+  padding: 6rem 1.5rem 4rem;
+}
+.faq-page-hero h1 {
+  font-family: var(--font-garamond), serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--dark);
+  margin: 0.5rem 0 1rem;
+}
+.faq-page-hero p {
+  font-size: 1.1rem;
+  color: var(--gray-muted);
+}
+.faq-page-body {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+}
+.faq-page-section-heading {
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--gray-muted);
+  margin-bottom: 1rem;
+}
+.faq-page-cta {
+  text-align: center;
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+.faq-page-cta p {
+  font-size: 1rem;
+  color: var(--gray-muted);
+}
+
 /* ---------- /demo page ---------- */
 .demo-page {
   min-height: 100vh;
@@ -2344,11 +2516,164 @@ section {
   flex-wrap: wrap;
   justify-content: center;
 }
+/* ---------- /book-call page ---------- */
+.calendly-inline-widget {
+  width: 100%;
+  margin-top: 1.5rem;
+  border: 1.5px solid var(--dark);
+  border-radius: 28px;
+  box-shadow: 0 6px 0 0 var(--dark);
+  overflow: hidden;
+}
+
 @media (max-width: 700px) {
   .demo-page {
     padding: 2rem 1rem 4rem;
   }
   .demo-video-frame {
     border-radius: 18px;
+  }
+  .calendly-inline-widget {
+    border-radius: 18px;
+    height: 1000px !important;
+  }
+}
+
+/* ---------- Demandes supportées ---------- */
+.demandes-section {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+.demandes-head {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 4.5rem;
+}
+.demandes-eyebrow {
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-muted);
+}
+.demandes-h2 {
+  font-family: var(--font-garamond), Georgia, serif;
+  font-size: clamp(2.4rem, 5vw, 3.75rem);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  font-weight: 500;
+  color: var(--dark);
+  margin: 0;
+}
+.demandes-accent {
+  font-style: italic;
+  color: var(--turquoise);
+}
+.demandes-lead {
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 1.1rem;
+  color: var(--gray-text);
+  line-height: 1.65;
+  max-width: 56ch;
+  margin: 0;
+}
+
+.demandes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+@media (max-width: 1080px) {
+  .demandes-grid {
+    grid-template-columns: 1fr;
+    max-width: 620px;
+    margin: 0 auto;
+  }
+}
+
+.demandes-card {
+  background: #ffffff;
+  border: 1px solid var(--border-soft);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px -6px rgba(10, 19, 34, 0.07);
+  display: flex;
+  flex-direction: column;
+}
+
+.demandes-card-header {
+  border-top: 3px solid transparent;
+  padding: 1.5rem 1.75rem 1.25rem;
+  border-bottom: 1px solid var(--border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.demandes-cat-label {
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.demandes-cat-desc {
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 0.875rem;
+  color: var(--gray-text);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.demandes-prog-list {
+  list-style: none;
+  padding: 1.25rem 1.75rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+}
+.demandes-prog-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 0.925rem;
+  color: var(--dark);
+  line-height: 1.45;
+}
+.demandes-prog-dot {
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  margin-top: 0.5em;
+}
+.demandes-card-footer {
+  display: block;
+  padding: 0.9rem 1.75rem;
+  border-top: 1px solid var(--border-soft);
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+.demandes-card-footer:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 640px) {
+  .demandes-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+  .demandes-head {
+    margin-bottom: 3rem;
   }
 }
