@@ -172,33 +172,6 @@ const jsonLd = [
       },
     ],
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "Review",
-    author: { "@type": "Person", name: "Marie-Ève Bergeron" },
-    reviewBody:
-      "Avec Formio, je traite 12 dossiers par semaine au lieu de 7. J'économise en moyenne 3h30 par dossier — c'est l'outil qui a le plus transformé ma pratique.",
-    reviewRating: { "@type": "Rating", ratingValue: 5, bestRating: 5 },
-    itemReviewed: { "@type": "SoftwareApplication", name: "Formio" },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Review",
-    author: { "@type": "Person", name: "Karim Benali" },
-    reviewBody:
-      "Le pré-remplissage automatique m'a fait gagner 4 heures par demande. Mes clients soumettent leurs documents depuis leur téléphone en 5 minutes.",
-    reviewRating: { "@type": "Rating", ratingValue: 5, bestRating: 5 },
-    itemReviewed: { "@type": "SoftwareApplication", name: "Formio" },
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Review",
-    author: { "@type": "Person", name: "Isabelle Roy" },
-    reviewBody:
-      "Mes formulaires Arrima sont prêts en 8 minutes au lieu de 50. En trois mois, j'ai pu accepter deux fois plus de clients.",
-    reviewRating: { "@type": "Rating", ratingValue: 5, bestRating: 5 },
-    itemReviewed: { "@type": "SoftwareApplication", name: "Formio" },
-  },
 ];
 
 export default function RootLayout({
