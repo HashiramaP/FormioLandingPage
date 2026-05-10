@@ -390,7 +390,7 @@ export function HowItWorksClient() {
         }
 
         /* ── Steps section ────────────────────────────────────── */
-        .hiw-section { padding: 7rem 0 5rem; overflow-x: hidden; }
+        .hiw-section { padding: 7rem 1.5rem 5rem; overflow-x: hidden; }
         .hiw-section-head { margin-bottom: 4.5rem; }
         .hiw-h2 {
           font-family: var(--font-garamond), Georgia, serif;
@@ -597,7 +597,7 @@ export function HowItWorksClient() {
         /* ── Mobile ───────────────────────────────────────────── */
         @media (max-width: 640px) {
           .hiw-hero { padding: 6rem 1.25rem 4rem; }
-          .hiw-section { padding: 5rem 0 3rem; }
+          .hiw-section { padding: 5rem 1.25rem 3rem; }
           .hiw-step { grid-template-columns: 52px 1fr; gap: 0 1.5rem; }
           .hiw-step-circle { width: 44px; height: 44px; }
           .hiw-step-circle svg { width: 18px; height: 18px; }
