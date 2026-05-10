@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -31,6 +32,12 @@ import {
 } from "@/app/icons";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const clientLogos = [
+  { src: "/clients/mbb-avocats.png",   alt: "MBB Avocats",   width: 600, height: 357, wide: false },
+  { src: "/clients/tugps-latino.png",  alt: "TUGPS Latino",  width: 600, height: 135, wide: true  },
+  { src: "/clients/krishna-gagne.png", alt: "Krishna Gagné", width: 484, height: 363, wide: false },
+];
 
 const demandesCategories = [
   {
@@ -272,14 +279,58 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="trust-row hero-fade anim-fade">
-            <div className="trust-dots">
-              <span /><span /><span /><span />
-            </div>
-            Utilisé par des cabinets d&apos;immigration au Québec
-          </div>
         </div>
       </header>
+
+      {/* CLIENTS — hidden until written permission is collected from each cabinet to display their logo */}
+      {false && (
+      <div className="clients-wrap">
+        <section className="clients-panel" aria-labelledby="clients-heading">
+          <div className="clients-inner">
+            <h2 id="clients-heading" className="clients-h2">
+              Utilisé par des avocats en immigration{" "}
+              <em className="clients-accent">partout au Québec.</em>
+            </h2>
+
+            <div className="clients-row">
+              {/* Desktop: static centered list */}
+              <ul className="clients-logos clients-static" aria-label="Cabinets clients">
+                {clientLogos.map((logo) => (
+                  <li key={logo.alt} className="clients-logo-item">
+                    <Image
+                      src={logo.src}
+                      alt={logo.alt}
+                      width={logo.width}
+                      height={logo.height}
+                      className={`clients-logo-img${logo.wide ? " clients-logo-wide" : ""}`}
+                    />
+                  </li>
+                ))}
+              </ul>
+
+              {/* Mobile: infinite marquee — logos rendered twice for seamless loop */}
+              <div className="clients-marquee" aria-hidden="true">
+                <div className="clients-marquee-track">
+                  {[...clientLogos, ...clientLogos].map((logo, i) => (
+                    <div key={`m-${i}`} className="clients-marquee-item">
+                      <Image
+                        src={logo.src}
+                        alt=""
+                        width={logo.width}
+                        height={logo.height}
+                        className={`clients-logo-img${logo.wide ? " clients-logo-wide" : ""}`}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <p className="clients-more">et bien d&apos;autres</p>
+            </div>
+          </div>
+        </section>
+      </div>
+      )}
 
       {/* PLATFORM/INTEGRATIONS — dark, wisprflow-style layout */}
       <section id="platform" className="section-dark platform-section">
@@ -564,18 +615,26 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Connector — hand-drawn dashed arrow */}
+          {/* Connector — hand-drawn dashed arrow (horizontal on desktop, vertical on mobile) */}
           <div className="how-connector">
             <span className="how-connector-label">
               Formio s&apos;occupe du reste
             </span>
             <svg
-              className="how-arrow"
+              className="how-arrow how-arrow-h"
               viewBox="0 0 300 60"
               preserveAspectRatio="none"
               aria-hidden
             >
               <path d="M 10 30 C 55 18, 110 44, 150 30 C 195 16, 240 44, 285 30 L 268 18 M 285 30 L 268 42" />
+            </svg>
+            <svg
+              className="how-arrow-v"
+              viewBox="0 0 60 120"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden
+            >
+              <path d="M 30 6 C 48 26, 12 50, 30 70 C 48 88, 18 102, 30 112 L 22 102 M 30 112 L 38 102" />
             </svg>
           </div>
 

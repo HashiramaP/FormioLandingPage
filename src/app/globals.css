@@ -128,7 +128,9 @@ svg {
   position: sticky;
   top: 1.25rem;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
   z-index: 50;
   padding: 1.25rem 1.25rem 0;
   pointer-events: none;
@@ -245,9 +247,103 @@ svg {
   transform: translateY(-1px);
   box-shadow: 0 3px 0 0 var(--dark);
 }
+/* ---------- Mobile hamburger ---------- */
+.nav-hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: var(--cream);
+  color: var(--dark);
+  border: 1.5px solid var(--dark);
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 2px 0 0 var(--dark);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.nav-hamburger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 0 0 var(--dark);
+}
+.nav-hamburger:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 0 var(--dark);
+}
+
+/* ---------- Mobile drawer (under the floating nav) ---------- */
+.nav-mobile-menu {
+  display: none;
+  background: var(--cream);
+  border: 1.5px solid var(--dark);
+  border-radius: 16px;
+  box-shadow: 0 2px 0 0 var(--dark);
+  padding: 0.8rem;
+  pointer-events: auto;
+  width: 100%;
+  max-width: 1080px;
+}
+.nav-mobile-link,
+.nav-mobile-secondary {
+  display: block;
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--dark);
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.nav-mobile-link:hover,
+.nav-mobile-secondary:hover {
+  background: rgba(10, 19, 34, 0.06);
+}
+.nav-mobile-secondary {
+  font-weight: 600;
+}
+.nav-mobile-sep {
+  height: 1px;
+  background: rgba(10, 19, 34, 0.12);
+  margin: 0.65rem 0.5rem;
+}
+.nav-mobile-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  background: var(--brand);
+  color: var(--brand-on);
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.9rem 1.25rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--dark);
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 0 0 var(--dark);
+  text-decoration: none;
+}
+.nav-mobile-cta:hover {
+  background: var(--brand-deep);
+}
+
 @media (max-width: 880px) {
-  .nav-links {
+  .nav-center,
+  .nav-right {
     display: none;
+  }
+  .nav-hamburger {
+    display: inline-flex;
+  }
+  .nav-mobile-menu {
+    display: block;
+  }
+  .nav {
+    padding: 0.45rem 0.55rem 0.45rem 1rem;
   }
 }
 
@@ -1552,13 +1648,12 @@ section {
   color: var(--gray-muted);
   text-align: center;
 }
-.how-arrow {
-  width: 100%;
-  height: 60px;
+.how-arrow,
+.how-arrow-v {
   overflow: visible;
-  clip-path: inset(0 100% 0 0);
 }
-.how-arrow path {
+.how-arrow path,
+.how-arrow-v path {
   stroke: #1a1a1a;
   stroke-width: 2.5;
   stroke-dasharray: 6 4;
@@ -1566,10 +1661,26 @@ section {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
+/* Horizontal arrow: desktop default (animated by GSAP via clip-path) */
+.how-arrow-h {
+  width: 100%;
+  height: 60px;
+  clip-path: inset(0 100% 0 0);
+  display: block;
+}
+
+/* Vertical arrow: mobile only */
+.how-arrow-v {
+  display: none;
+  width: 60px;
+  height: 110px;
+  margin: 0 auto;
+}
+
 @media (max-width: 900px) {
-  .how-arrow {
-    transform: rotate(90deg);
-  }
+  .how-arrow-h { display: none; }
+  .how-arrow-v { display: block; }
 }
 
 .how-microcopy {
@@ -2675,5 +2786,189 @@ section {
   }
   .demandes-head {
     margin-bottom: 3rem;
+  }
+}
+
+/* ── Clients section: single turquoise rounded panel ── */
+.clients-wrap {
+  margin: 0 1rem;
+  padding-top: 3rem;
+  padding-bottom: 0;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 700px) {
+  .clients-wrap { margin: 0 0.5rem; padding-top: 2rem; }
+}
+
+.clients-panel {
+  background: var(--turquoise);
+  border-radius: 40px 40px 0 0;
+  padding: 4rem 3rem 10rem;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 700px) {
+  .clients-panel { border-radius: 28px 28px 0 0; padding: 2.75rem 1.5rem 6.25rem; }
+}
+
+/* Navy platform section sits ON TOP of the turquoise. Same horizontal margin
+   so outer edges are continuous; deeper overlap (= navy's full corner radius)
+   hides the turquoise's bottom edge inside the navy's curves — no seam. */
+.clients-wrap + .platform-section {
+  margin-top: -80px;
+  position: relative;
+  z-index: 2;
+}
+@media (max-width: 700px) {
+  .clients-wrap + .platform-section { margin-top: -48px; }
+}
+
+.clients-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+}
+@media (max-width: 700px) {
+  .clients-inner { gap: 2rem; }
+}
+
+.clients-h2 {
+  font-family: var(--font-garamond), Georgia, serif;
+  font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0 auto;
+  text-align: center;
+}
+.clients-accent {
+  font-style: italic;
+  color: var(--cream-on-dark);
+  opacity: 0.85;
+}
+
+.clients-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 88px;
+}
+@media (max-width: 760px) {
+  .clients-row {
+    flex-direction: column;
+    gap: 1.5rem;
+    min-height: 0;
+  }
+}
+
+.clients-logos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem 4rem;
+}
+@media (max-width: 700px) {
+  .clients-logos { gap: 2rem 2.75rem; }
+}
+
+/* Marquee (mobile only) — desktop hides this entire block */
+.clients-marquee { display: none; }
+.clients-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  width: max-content;
+  animation: clients-marquee-scroll 14s linear infinite;
+}
+.clients-marquee-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+@keyframes clients-marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .clients-marquee-track { animation: none; }
+}
+
+@media (max-width: 760px) {
+  .clients-static { display: none; }
+  .clients-marquee {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 8%,
+      #000 92%,
+      transparent 100%
+    );
+            mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 8%,
+      #000 92%,
+      transparent 100%
+    );
+  }
+}
+.clients-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.95;
+  transition: opacity 0.2s ease;
+}
+.clients-logo-item:hover { opacity: 1; }
+
+.clients-logo-img {
+  height: 88px;
+  width: auto;
+  max-width: 260px;
+  object-fit: contain;
+}
+.clients-logo-img.clients-logo-wide {
+  /* TUGPS banner is very wide; cap by width, let height auto */
+  height: auto;
+  max-height: 64px;
+  max-width: 320px;
+  width: auto;
+}
+@media (max-width: 700px) {
+  .clients-logo-img { height: 64px; max-width: 200px; }
+  .clients-logo-img.clients-logo-wide { max-height: 48px; max-width: 230px; }
+}
+
+.clients-more {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-figtree), sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  white-space: nowrap;
+}
+@media (max-width: 760px) {
+  .clients-more {
+    position: static;
+    transform: none;
   }
 }
