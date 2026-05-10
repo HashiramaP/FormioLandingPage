@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { FeatureTabs } from "./FeatureTabs";
 import { FaqRow } from "@/app/FaqRow";
+import TrackEvent from "@/app/TrackEvent";
 import {
   SparkleIcon,
   CalendarIcon,
@@ -126,6 +127,10 @@ export default function CustomFormsPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <TrackEvent
+        event="ViewContent"
+        params={{ content_name: "Custom Forms", content_category: "feature" }}
       />
 
       {/* HERO */}

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { FaqRow } from "@/app/FaqRow";
 import { VsSectionTabs } from "./VsSectionTabs";
 import { GlobeIcon, WandIcon, ChatIcon, CheckIcon, SparkleIcon } from "@/app/icons";
+import TrackEvent from "@/app/TrackEvent";
 
 type Slug = "caseeasy" | "visto" | "visaflo";
 
@@ -345,6 +346,14 @@ export default async function CompetitorPage({
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <TrackEvent
+        event="ViewContent"
+        params={{
+          content_name: `Comparison: Formio vs ${c.name}`,
+          content_category: "comparison",
+          content_ids: [competitor],
+        }}
+      />
 
       {/* ── HERO ── */}
       <header className="vs2-hero section-cream">

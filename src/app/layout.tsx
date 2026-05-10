@@ -3,6 +3,7 @@ import { EB_Garamond, Figtree } from "next/font/google";
 import "./globals.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import MetaPixel from "./MetaPixel";
 
 const garamond = EB_Garamond({
   subsets: ["latin"],
@@ -189,6 +190,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <MetaPixel />
         <Navbar />
         {children}
         <Footer />

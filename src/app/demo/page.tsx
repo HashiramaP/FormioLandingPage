@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import TrackEvent from "@/app/TrackEvent";
 
 export const metadata: Metadata = {
   title: "Voir Formio en action — Démo vidéo",
@@ -10,6 +11,10 @@ export const metadata: Metadata = {
 export default function DemoPage() {
   return (
     <main className="demo-page">
+      <TrackEvent
+        event="ViewContent"
+        params={{ content_name: "Demo Video", content_category: "demo" }}
+      />
       <div className="demo-container">
         <h1 className="demo-title">
           Voir <span className="demo-title-brand">Formio</span> en action
