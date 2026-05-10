@@ -115,7 +115,7 @@ function TemplateMockup() {
     { name: "Résidence permanente", tag: "Fédéral" },
     { name: "Permis de travail ouvert", tag: "Fédéral" },
     { name: "Permis d'études", tag: "Fédéral" },
-    { name: "Arrima — PEQ", tag: "Québec", active: true },
+    { name: "Arrima : PEQ", tag: "Québec", active: true },
     { name: "Regroupement familial", tag: "Fédéral" },
   ];
   return (

@@ -4,7 +4,7 @@ import { FaqRow } from "@/app/FaqRow";
 import { SparkleIcon } from "@/app/icons";
 
 export const metadata: Metadata = {
-  title: "FAQ — Questions fréquentes | Formio",
+  title: "FAQ, Questions fréquentes | Formio",
   description:
     "Toutes les réponses à vos questions sur Formio : sécurité, formulaires supportés, conformité CICC, intégration à votre workflow et plus.",
   alternates: { canonical: "https://formio.ca/faq" },
@@ -42,7 +42,7 @@ const sections = [
       {
         question: "Formio fonctionne-t-il pour Express Entry et les PNP ?",
         answer:
-          "Oui — Express Entry, tous les Programmes des candidats des provinces, Arrima (Québec), permis d'études, permis de travail et visas visiteurs sont tous pris en charge.",
+          "Oui : Express Entry, tous les Programmes des candidats des provinces, Arrima (Québec), permis d'études, permis de travail et visas visiteurs sont tous pris en charge.",
       },
       {
         question: "Puis-je créer des questionnaires personnalisés par type de demande ?",
@@ -77,12 +77,12 @@ const sections = [
       {
         question: "Combien de temps faut-il pour configurer Formio ?",
         answer:
-          "La plupart des cabinets sont opérationnels en moins de 15 minutes. Il n'y a pas d'onboarding long ni de formation requise — si vous savez utiliser un formulaire en ligne, vous savez utiliser Formio.",
+          "La plupart des cabinets sont opérationnels en moins de 15 minutes. Il n'y a pas d'onboarding long ni de formation requise. Si vous savez utiliser un formulaire en ligne, vous savez utiliser Formio.",
       },
       {
         question: "Est-ce que ça fonctionne avec mon workflow actuel ?",
         answer:
-          "Oui. Formio remplace vos questionnaires Word et votre processus de copier-coller manuel. Vos clients remplissent un formulaire en ligne, et vous recevez les données structurées directement dans la plateforme — prêtes à être intégrées dans les formulaires officiels.",
+          "Oui. Formio remplace vos questionnaires Word et votre processus de copier-coller manuel. Vos clients remplissent un formulaire en ligne, et vous recevez les données structurées directement dans la plateforme, prêtes à être intégrées dans les formulaires officiels.",
       },
       {
         question: "Puis-je remplacer mes questionnaires Word existants ?",

@@ -26,7 +26,7 @@ const faqItems = [
   {
     question: "Formio supporte-t-il tous les types de demandes d'immigration ?",
     answer:
-      "Oui. Formio couvre toutes les demandes fédérales et québécoises — résidence permanente, permis de travail, permis d'études, Arrima, Express Entry, regroupement familial, programmes provinciaux. Construisez un questionnaire distinct par programme ou partez d'un modèle et adaptez-le.",
+      "Oui. Formio couvre toutes les demandes fédérales et québécoises : résidence permanente, permis de travail, permis d'études, Arrima, Express Entry, regroupement familial, programmes provinciaux. Construisez un questionnaire distinct par programme ou partez d'un modèle et adaptez-le.",
   },
   {
     question: "Puis-je importer mon questionnaire Word existant ?",
@@ -198,7 +198,7 @@ export default function CustomFormsPage() {
             <p>
               Formio ne se limite pas à un ensemble fixe de programmes. Résidence
               permanente, permis de travail, permis d&apos;études, regroupement familial,
-              Arrima, Express Entry, programmes provinciaux — construisez un questionnaire
+              Arrima, Express Entry, programmes provinciaux. Construisez un questionnaire
               distinct pour chaque type de dossier que votre cabinet traite.
             </p>
             <p>
@@ -226,7 +226,7 @@ export default function CustomFormsPage() {
                   {[
                     { name: "Résidence permanente", active: false },
                     { name: "Permis de travail", active: false },
-                    { name: "Arrima — PEQ", active: true },
+                    { name: "Arrima : PEQ", active: true },
                     { name: "Regroupement familial", active: false },
                     { name: "Permis d'études", active: false },
                   ].map((item) => (
@@ -240,7 +240,7 @@ export default function CustomFormsPage() {
                 </div>
                 <div className="cf2-mockup-main">
                   <div className="cf2-mockup-main-header">
-                    Arrima — PEQ
+                    Arrima : PEQ
                     <span className="cf2-status-badge">Publié</span>
                   </div>
                   {[

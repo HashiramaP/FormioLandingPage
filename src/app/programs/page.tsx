@@ -5,7 +5,7 @@ import { SparkleIcon } from "@/app/icons";
 export const metadata: Metadata = {
   title: "Programmes d'immigration pris en charge | Formio",
   description:
-    "Formio prend en charge toutes les demandes d'immigration au Canada — temporaires, permanentes et québécoises. Permis de travail, Express Entry, PEQ, Arrima, parrainage familial et plus.",
+    "Formio prend en charge toutes les demandes d'immigration au Canada : temporaires, permanentes et québécoises. Permis de travail, Express Entry, PEQ, Arrima, parrainage familial et plus.",
   alternates: { canonical: "https://formio.ca/programs" },
 };
 
@@ -15,7 +15,7 @@ const categories = [
     label: "Temporaire",
     color: "#0088ff",
     bg: "rgba(0,136,255,0.08)",
-    intro: "Permis et visas pour les séjours temporaires au Canada — travail, études ou visite.",
+    intro: "Permis et visas pour les séjours temporaires au Canada : travail, études ou visite.",
     groups: [
       {
         title: "Permis de travail",
@@ -45,7 +45,7 @@ const categories = [
         programs: [
           { name: "Visa de résident temporaire (VRT)", note: "Pour les ressortissants de pays non exemptés" },
           { name: "Autorisation de voyage électronique (AVE)", note: "Pour les ressortissants exemptés de visa" },
-          { name: "Super visa — parents et grands-parents", note: "Séjour jusqu'à 5 ans par visite" },
+          { name: "Super visa, parents et grands-parents", note: "Séjour jusqu'à 5 ans par visite" },
           { name: "Permis de séjour temporaire (PST)", note: "Pour personnes autrement inadmissibles" },
           { name: "Extension de statut de visiteur", note: "Prolongation au-delà des 6 mois initiaux" },
         ],
@@ -84,7 +84,7 @@ const categories = [
           { name: "Territoires du Nord-Ouest (TNP)", note: "" },
           { name: "Yukon (YNP)", note: "" },
           { name: "Programme de l'Atlantique (PICA)", note: "Nouvelle-Écosse, N.-B., Î.-P.-É., T.-N.-L." },
-          { name: "RNIP — Communautés rurales et du Nord", note: "11 communautés participantes" },
+          { name: "RNIP : Communautés rurales et du Nord", note: "11 communautés participantes" },
         ],
       },
       {
@@ -119,8 +119,8 @@ const categories = [
         title: "Travailleurs qualifiés (Arrima)",
         programs: [
           { name: "Programme régulier des travailleurs qualifiés (PRTQ)", note: "Système de déclaration d'intérêt Arrima" },
-          { name: "PEQ — volet travailleurs temporaires", note: "12 mois d'expérience au Québec + français" },
-          { name: "PEQ — volet diplômés du Québec", note: "Diplôme québécois de niveau collégial ou universitaire" },
+          { name: "PEQ, volet travailleurs temporaires", note: "12 mois d'expérience au Québec + français" },
+          { name: "PEQ, volet diplômés du Québec", note: "Diplôme québécois de niveau collégial ou universitaire" },
           { name: "Programme de mobilité francophone (PMF)", note: "Travailleurs francophones hors PEQ" },
           { name: "Programme des travailleurs de la construction (PITC)", note: "Métiers de la construction reconnus par la CCQ" },
         ],
@@ -176,7 +176,7 @@ export default function ProgramsPage() {
           </h1>
           <p className="prog-lead">
             Formio prend en charge l&apos;ensemble des programmes d&apos;immigration canadiens et
-            québécois — {totalPrograms} programmes au total, répartis en trois grandes catégories.
+            québécois : {totalPrograms} programmes au total, répartis en trois grandes catégories.
           </p>
           <div className="prog-hero-cta">
             <Link href="/book-call" className="btn-primary">
@@ -268,7 +268,7 @@ export default function ProgramsPage() {
               Commençons.
             </h2>
             <p className="prog-cta-sub">
-              Formio génère les formulaires, collecte les informations et tient les dossiers à jour — pour chacun de ces {totalPrograms} programmes.
+              Formio génère les formulaires, collecte les informations et tient les dossiers à jour, pour chacun de ces {totalPrograms} programmes.
             </p>
             <Link href="/book-call" className="btn-primary prog-cta-btn">
               <SparkleIcon /> Réserver une démo gratuite →

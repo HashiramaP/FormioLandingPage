@@ -52,7 +52,7 @@ const demandesCategories = [
       "Permis de travail ouvert pour conjoint(e)",
       "Permis d'études",
       "Visa de résident temporaire (VRT)",
-      "Super visa — parents et grands-parents",
+      "Super visa, parents et grands-parents",
     ],
   },
   {
@@ -62,8 +62,8 @@ const demandesCategories = [
     bgVar: "rgba(14,116,144,0.08)",
     description: "Toutes les voies d'accès à la résidence permanente fédérale, y compris les PCP",
     programs: [
-      "Express Entry — Travailleurs qualifiés (PTQF)",
-      "Express Entry — Expérience canadienne (CEC)",
+      "Express Entry, Travailleurs qualifiés (PTQF)",
+      "Express Entry, Expérience canadienne (CEC)",
       "Programmes des candidats des provinces (PCP)",
       "Parrainage d'époux et conjoints de fait",
       "Parrainage de parents et grands-parents (PGP)",
@@ -78,8 +78,8 @@ const demandesCategories = [
     description: "Sélection du Québec via Arrima, PEQ et programmes provinciaux exclusifs",
     programs: [
       "Programme régulier des travailleurs qualifiés (PRTQ)",
-      "PEQ — volet travailleurs temporaires",
-      "PEQ — volet diplômés du Québec",
+      "PEQ, volet travailleurs temporaires",
+      "PEQ, volet diplômés du Québec",
       "Entrepreneurs et investisseurs immigrants",
       "Regroupement familial (Québec)",
     ],
@@ -348,7 +348,7 @@ export default function Home() {
                 <span className="platform-em">où qu&apos;ils soient.</span>
               </h2>
               <p className="anim-fade">
-                Web, mobile ou tablette — Formio s&apos;adapte à n&apos;importe
+                Web, mobile ou tablette. Formio s&apos;adapte à n&apos;importe
                 quel appareil pour offrir à vos clients une expérience fluide et
                 accessible.
               </p>
@@ -474,7 +474,7 @@ export default function Home() {
                       <span className="bd-badge blue">~35%</span>
                     </div>
                     <p>
-                      Depuis le passeport, CV, permis de séjour — nom, date de
+                      Depuis le passeport, CV, permis de séjour : nom, date de
                       naissance, adresse, historique…
                     </p>
                   </div>
@@ -512,7 +512,7 @@ export default function Home() {
             <div className="breakdown-right">
               <div className="checklist">
                 <div className="checklist-header">
-                  DOSSIER TYPE — RÉSIDENCE PERMANENTE
+                  DOSSIER TYPE : RÉSIDENCE PERMANENTE
                 </div>
                 <ul>
                   {/* Blue — auto-extracted from documents */}
@@ -609,7 +609,7 @@ export default function Home() {
               <h3>Le questionnaire client</h3>
               <p>
                 Envoyez un lien à votre client. En quelques minutes, il répond
-                à des questions simples depuis son téléphone — sans jargon
+                à des questions simples depuis son téléphone, sans jargon
                 juridique, sans PDF à imprimer.
               </p>
             </div>
@@ -646,7 +646,7 @@ export default function Home() {
               <p>
                 Formio extrait les réponses, les croise avec les données des
                 documents de votre client, et génère automatiquement les
-                formulaires IMM, Arrima ou IRCC — pré-remplis, prêts à
+                formulaires IMM, Arrima ou IRCC, pré-remplis, prêts à
                 vérifier.
               </p>
             </div>
@@ -673,7 +673,7 @@ export default function Home() {
               <em className="demandes-accent">Formio prend en charge.</em>
             </h2>
             <p className="demandes-lead">
-              Temporaires, permanentes ou québécoises — peu importe le type de demande,
+              Temporaires, permanentes ou québécoises, peu importe le type de demande,
               Formio collecte les informations, génère les formulaires et tient les dossiers à jour.
             </p>
           </div>
@@ -728,7 +728,7 @@ export default function Home() {
           <div className="testimonials-grid">
             <figure className="testimonial-card anim-fade">
               <blockquote>
-                <p>&ldquo;Avec Formio, je traite 12&nbsp;dossiers par semaine au lieu de&nbsp;7. J&apos;économise en moyenne 3h30&nbsp;par dossier — c&apos;est l&apos;outil qui a le plus transformé ma pratique.&rdquo;</p>
+                <p>&ldquo;Avec Formio, je traite 12&nbsp;dossiers par semaine au lieu de&nbsp;7. J&apos;économise en moyenne 3h30&nbsp;par dossier, c&apos;est l&apos;outil qui a le plus transformé ma pratique.&rdquo;</p>
               </blockquote>
               <figcaption>
                 <strong>Marie-Ève Bergeron</strong>
@@ -772,13 +772,13 @@ export default function Home() {
 
         <div className="faq-list">
           <FaqRow question="Formio fonctionne-t-il pour Express Entry et les PNP&nbsp;?">
-            Oui — Express Entry, tous les Programmes des candidats des provinces, Arrima (Québec), permis d&apos;études, permis de travail et visas visiteurs sont tous pris en charge.
+            Oui : Express Entry, tous les Programmes des candidats des provinces, Arrima (Québec), permis d&apos;études, permis de travail et visas visiteurs sont tous pris en charge.
           </FaqRow>
           <FaqRow question="Formio est-il conforme aux exigences du CICC&nbsp;?">
             Oui. Formio utilise un stockage chiffré sur des serveurs canadiens, enregistre le consentement client et maintient des pistes d&apos;audit complètes qui répondent aux exigences du CICC.
           </FaqRow>
           <FaqRow question="Puis-je créer des questionnaires personnalisés par type de demande&nbsp;?">
-            Oui — construisez des formulaires depuis zéro, clonez un modèle existant ou importez vos questionnaires Word ou PDF actuels via extraction par IA.
+            Oui : construisez des formulaires depuis zéro, clonez un modèle existant ou importez vos questionnaires Word ou PDF actuels via extraction par IA.
           </FaqRow>
           <FaqRow question="Combien de temps faut-il pour configurer Formio&nbsp;?">
             La plupart des cabinets sont opérationnels en moins de 15 minutes. Pas d&apos;onboarding long ni de formation requise.
@@ -787,7 +787,7 @@ export default function Home() {
             Toutes les données sont chiffrées et hébergées sur des serveurs canadiens. Vous conservez la propriété complète de vos données et pouvez les exporter à tout moment.
           </FaqRow>
           <FaqRow question="Formio peut-il remplacer mes questionnaires Word&nbsp;?">
-            Oui. Vos clients remplissent un formulaire interactif depuis leur téléphone, et vous recevez des données structurées prêtes à intégrer dans les formulaires IRCC — plus de pièces jointes Word par courriel.
+            Oui. Vos clients remplissent un formulaire interactif depuis leur téléphone, et vous recevez des données structurées prêtes à intégrer dans les formulaires IRCC, plus de pièces jointes Word par courriel.
           </FaqRow>
         </div>
 

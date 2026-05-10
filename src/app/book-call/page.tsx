@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import CalendlyEmbed from "./CalendlyEmbed";
 
 export const metadata: Metadata = {
-  title: "Réserver un appel — Formio",
+  title: "Réserver un appel, Formio",
   description:
     "Planifiez un appel de 30 minutes avec l'équipe Formio pour découvrir comment automatiser vos formulaires d'immigration.",
 };

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import TrackEvent from "@/app/TrackEvent";
 
 export const metadata: Metadata = {
-  title: "Voir Formio en action — Démo vidéo",
+  title: "Voir Formio en action, démo vidéo",
   description:
     "Découvrez comment Formio remplit vos formulaires IMM, Arrima et IRCC en quelques secondes.",
 };

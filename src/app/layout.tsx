@@ -20,11 +20,11 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
-  title: "Formio — Immigration Software for Canadian Consultants & RCICs",
-  description: "Automate IRCC form filling, client intake, and document generation. Built for Canadian RCICs and immigration lawyers. Free trial — no credit card required.",
+  title: "Formio, Immigration Software for Canadian Consultants & RCICs",
+  description: "Automate IRCC form filling, client intake, and document generation. Built for Canadian RCICs and immigration lawyers. Free trial, no credit card required.",
   alternates: { canonical: "https://formio.ca" },
   openGraph: {
-    title: "Formio — Immigration Software for Canadian Consultants",
+    title: "Formio, Immigration Software for Canadian Consultants",
     description: "Automate your intake forms, IRCC pre-fill, and legal docs.",
     url: "https://formio.ca",
     siteName: "Formio",
@@ -128,7 +128,7 @@ const jsonLd = [
         name: "Does Formio work for Express Entry and PNP applications?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes — Express Entry, all Provincial Nominee Programs, Arrima (Quebec), study permits, work permits, and visitor visas are all supported.",
+          text: "Yes: Express Entry, all Provincial Nominee Programs, Arrima (Quebec), study permits, work permits, and visitor visas are all supported.",
         },
       },
       {
@@ -144,7 +144,7 @@ const jsonLd = [
         name: "Can I create custom intake forms for different visa types?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes — build forms from scratch, fork existing templates, or import your existing Word or PDF intake forms via AI extraction.",
+          text: "Yes: build forms from scratch, fork existing templates, or import your existing Word or PDF intake forms via AI extraction.",
         },
       },
       {
@@ -168,7 +168,7 @@ const jsonLd = [
         name: "Can Formio replace my existing Word questionnaire process?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Yes. Clients complete a mobile-friendly intake form, and you receive structured data ready for IRCC pre-filling — no more Word attachments by email.",
+          text: "Yes. Clients complete a mobile-friendly intake form, and you receive structured data ready for IRCC pre-filling, no more Word attachments by email.",
         },
       },
     ],

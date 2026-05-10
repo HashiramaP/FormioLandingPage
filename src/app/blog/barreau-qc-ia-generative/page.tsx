@@ -21,10 +21,10 @@ const faqItems = [
   {
     question: "L'utilisation de l'IA est-elle interdite par le Barreau du Québec ?",
     answer:
-      "Non. Le Barreau ne l'interdit pas — il en encadre l'usage. L'IA générative peut servir à la recherche, à la rédaction ou à l'analyse, à condition que l'avocat supervise les résultats, maintienne sa responsabilité professionnelle et respecte les obligations de confidentialité et de transparence.",
+      "Non. Le Barreau ne l'interdit pas. Il en encadre l'usage. L'IA générative peut servir à la recherche, à la rédaction ou à l'analyse, à condition que l'avocat supervise les résultats, maintienne sa responsabilité professionnelle et respecte les obligations de confidentialité et de transparence.",
     questionEn: "Is the use of AI prohibited by the Barreau du Québec?",
     answerEn:
-      "No. The Barreau does not prohibit it — it regulates its use. Generative AI can be used for research, drafting, or analysis, provided the lawyer supervises the results, maintains professional responsibility, and complies with confidentiality and transparency obligations.",
+      "No. The Barreau does not prohibit it. It regulates its use. Generative AI can be used for research, drafting, or analysis, provided the lawyer supervises the results, maintains professional responsibility, and complies with confidentiality and transparency obligations.",
   },
   {
     question: "Doit-on informer le client que l'on utilise l'IA ?",
@@ -37,10 +37,10 @@ const faqItems = [
   {
     question: "Qui est responsable si l'IA produit une erreur juridique ?",
     answer:
-      "L'avocat — entièrement. Le Barreau est explicite : la responsabilité professionnelle ne peut pas être déléguée à un outil. C'est précisément pourquoi le cadre insiste sur la supervision obligatoire de tout résultat généré par l'IA avant qu'il soit soumis à un client ou à un tribunal.",
+      "L'avocat, entièrement. Le Barreau est explicite : la responsabilité professionnelle ne peut pas être déléguée à un outil. C'est précisément pourquoi le cadre insiste sur la supervision obligatoire de tout résultat généré par l'IA avant qu'il soit soumis à un client ou à un tribunal.",
     questionEn: "Who is liable if AI produces a legal error?",
     answerEn:
-      "The lawyer — entirely. The Barreau is explicit: professional liability cannot be delegated to a tool. This is precisely why the framework insists on mandatory review of any AI-generated output before it is submitted to a client or a court.",
+      "The lawyer, entirely. The Barreau is explicit: professional liability cannot be delegated to a tool. This is precisely why the framework insists on mandatory review of any AI-generated output before it is submitted to a client or a court.",
   },
   {
     question: "Comment protéger la confidentialité du client quand on utilise l'IA ?",
@@ -266,8 +266,8 @@ export default function BarreauQcIaGenerativePage() {
           <h2 className="bqia-h2">Le Barreau du Québec a pris position.</h2>
           <p className="bqia-body">
             Le Barreau du Québec a publié un guide complet sur l&apos;intelligence artificielle générative
-            (IAG), disponible dans l&apos;espace membres. Ce guide n&apos;est pas une interdiction —
-            c&apos;est un cadre de gouvernance. Il couvre dix obligations professionnelles, identifie
+            (IAG), disponible dans l&apos;espace membres. Ce guide n&apos;est pas une interdiction.
+            C&apos;est un cadre de gouvernance. Il couvre dix obligations professionnelles, identifie
             cinq catégories de risques, et met à disposition une boîte à outils pratique incluant
             des listes de vérification, une FAQ et des formations de niveau débutant à avancé.
           </p>
@@ -342,7 +342,7 @@ export default function BarreauQcIaGenerativePage() {
             </table>
           </div>
           <p className="bqia-disclaimer">
-            Source : Guide du Barreau du Québec sur l&apos;intelligence artificielle générative —
+            Source : Guide du Barreau du Québec sur l&apos;intelligence artificielle générative,
             espace membres, section Normes, outils et références.
           </p>
         </div>
@@ -354,7 +354,7 @@ export default function BarreauQcIaGenerativePage() {
           <h2 className="bqia-h2">Comment Formio répond à ces obligations.</h2>
           <p className="bqia-body">
             Formio est la couche de gouvernance qui s&apos;insère entre vos avocats, vos clients,
-            vos outils IA et votre direction — transformant les processus IA invisibles en flux
+            vos outils IA et votre direction, transformant les processus IA invisibles en flux
             documentés, vérifiables et conformes.
           </p>
           <div className="bqia-table-wrap">
@@ -429,7 +429,7 @@ export default function BarreauQcIaGenerativePage() {
               Structurez vos flux IA.<br />Restez conforme.
             </h2>
             <p className="bqia-cta-sub">
-              Consentement client, supervision avocat, certificat de divulgation — tout en un.
+              Consentement client, supervision avocat, certificat de divulgation : tout en un.
             </p>
             <Link href="/demo" className="btn-primary bqia-cta-btn">
               <SparkleIcon /> Voir Formio en action →

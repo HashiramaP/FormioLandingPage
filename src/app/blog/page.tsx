@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Blog — Ressources pour RCIC et avocats en immigration | Formio",
+  title: "Blog, Ressources pour RCIC et avocats en immigration | Formio",
   description:
     "Guides pratiques sur la conformité CICC, la gestion de dossiers clients et les outils pour cabinets d'immigration au Canada.",
   alternates: { canonical: "https://formio.ca/blog" },

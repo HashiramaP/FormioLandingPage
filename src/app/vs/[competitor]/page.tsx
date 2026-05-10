@@ -49,7 +49,7 @@ const FAQ_ARRIMA: FaqItem = {
   qFr: "Formio génère-t-il les formulaires Arrima et IRCC automatiquement ?",
   aFr: "Oui, les deux. Formio remplit le portail Arrima et le portail IRCC. Il génère aussi tous les formulaires IMM en français et en anglais. Aucun autre outil de cette comparaison ne supporte Arrima.",
   qEn: "Does Formio automatically generate Arrima and IRCC forms?",
-  aEn: "Yes — both. Formio auto-fills the Quebec Arrima portal and the IRCC portal. It also generates all official IMM forms in French and English. No other tool in this comparison supports Arrima natively.",
+  aEn: "Yes, both. Formio auto-fills the Quebec Arrima portal and the IRCC portal. It also generates all official IMM forms in French and English. No other tool in this comparison supports Arrima natively.",
 };
 
 const FAQ_TRIAL: FaqItem = {
@@ -471,10 +471,10 @@ export default async function CompetitorPage({
               <div className="vs2-portal-wrap">
                 <div className="vs2-portal-chrome">
                   <span className="vs2-p-dot" /><span className="vs2-p-dot" /><span className="vs2-p-dot" />
-                  <span className="vs2-p-url">Arrima — Portail gouvernemental du Québec</span>
+                  <span className="vs2-p-url">Arrima, Portail gouvernemental du Québec</span>
                 </div>
                 <div className="vs2-portal-body">
-                  <div className="vs2-portal-title">Dossier PEQ — Informations personnelles</div>
+                  <div className="vs2-portal-title">Dossier PEQ : Informations personnelles</div>
                   {[
                     { label: "Nom de famille", value: "Tremblay" },
                     { label: "Prénom", value: "Marie-Claude" },

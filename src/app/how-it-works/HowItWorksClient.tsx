@@ -52,7 +52,7 @@ const steps = [
     num: "05",
     Icon: DocIcon,
     title: "Les formulaires officiels sont générés",
-    body: "Tous les IMMs, le portail IRCC, Arrima — remplis automatiquement, en français et en anglais, prêts à vérifier.",
+    body: "Tous les IMMs, le portail IRCC, Arrima, remplis automatiquement, en français et en anglais, prêts à vérifier.",
   },
   {
     num: "06",
