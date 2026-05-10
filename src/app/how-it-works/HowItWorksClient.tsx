@@ -601,6 +601,7 @@ export function HowItWorksClient() {
           .hiw-step { grid-template-columns: 52px 1fr; gap: 0 1.5rem; }
           .hiw-step-circle { width: 44px; height: 44px; }
           .hiw-step-circle svg { width: 18px; height: 18px; }
+          .hiw-step-bignum { display: none; }
           .hiw-callout-inner { flex-direction: column; gap: 1rem; padding: 2rem 1.5rem; }
           .hiw-managed-section { padding: 4.5rem 1.25rem 5rem; }
           .hiw-cta-card { border-radius: 28px; padding: 4rem 1.5rem 3.5rem; }
