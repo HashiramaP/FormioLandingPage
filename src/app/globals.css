@@ -1428,6 +1428,7 @@ section {
 .how-section {
   padding: 120px 1.5rem;
   background: var(--cream);
+  overflow: hidden;
 }
 .how-head {
   text-align: center;
