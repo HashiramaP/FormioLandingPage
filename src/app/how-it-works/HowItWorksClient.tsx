@@ -375,6 +375,7 @@ export function HowItWorksClient() {
         .hiw-anav-inner {
           display: flex; gap: 0.4rem; padding: 0.85rem 1.5rem;
           max-width: 1180px; margin: 0 auto; white-space: nowrap;
+          flex-wrap: wrap; justify-content: center;
         }
         .hiw-anav-link {
           font-family: var(--font-figtree), sans-serif;
