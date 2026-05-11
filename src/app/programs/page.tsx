@@ -308,7 +308,6 @@ export default function ProgramsPage() {
         .prog-anav {
           background: var(--cream); border-bottom: 1px solid var(--border-soft);
           overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-          position: sticky; top: 0; z-index: 30;
         }
         .prog-anav::-webkit-scrollbar { display: none; }
         .prog-anav-inner {
