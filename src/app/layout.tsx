@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import MetaPixel from "./MetaPixel";
+import HubSpot from "./HubSpot";
 
 const garamond = EB_Garamond({
   subsets: ["latin"],
@@ -191,6 +192,7 @@ export default function RootLayout({
       </head>
       <body>
         <MetaPixel />
+        <HubSpot />
         <Navbar />
         {children}
         <Footer />
